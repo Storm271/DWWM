@@ -1,0 +1,32 @@
+body{
+    background-color: #C6C0A0 ;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+h2 {
+color:#7D775C ;
+font-size: 150%;
+font-weight: bold;
+font-style: italic;
+text-align: center;
+letter-spacing: 1px;
+}
+h3 
+{
+color: #7D775C;
+font-size: 120%;
+font-weight: bold ;
+letter-spacing: 1px;
+
+}
+
+li 
+{
+line-height: 25px;
+
+}
+
+
+#vert
+{
+color: green;
+}

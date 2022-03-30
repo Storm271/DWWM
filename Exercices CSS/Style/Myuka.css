@@ -6,9 +6,16 @@
 .header {
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
     margin-left: -1%;
     margin-right: -8px;
     background-image: url("https://media.istockphoto.com/photos/vegetable-mix-picture-id1158000094?k=20&m=1158000094&s=612x612&w=0&h=lMTUofxZLo3EabyJCPTPI0Fgfya8SryxpUZWEhJMRNc=") ;
+=======
+    margin-left: 30px;
+    margin-right: 300px;   
+    background-image: url("https://media.istockphoto.com/photos/vegetable-mix-picture-id1158000094?k=20&m=1158000094&s=612x612&w=0&h=lMTUofxZLo3EabyJCPTPI0Fgfya8SryxpUZWEhJMRNc=") ;
+    width: 100%;
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     background-size: auto;
 }
 .titre {
@@ -21,8 +28,12 @@
     color:black ;
     
     
+<<<<<<< HEAD
 }
 .search {
+=======
+}.search {
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     width: 100%;
     position: relative;
     display: flex;
@@ -59,7 +70,11 @@
   .wrap{
     width: 30%;
     position: absolute;
+<<<<<<< HEAD
     top: 28%;
+=======
+    top: 50%;
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -74,7 +89,10 @@
     border: 2px solid black;
     color: white;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
 }
 
 .presentation {
@@ -86,8 +104,13 @@
     color: black;
 }
 .image {
+<<<<<<< HEAD
     max-width: 500px;
     max-height: 500px;
+=======
+    width: 500px;
+    height: 500px;
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     border: 2px solid black;
 }
 .ingredients {
@@ -127,27 +150,39 @@
 .autres-produits {
     display: flex;
     flex-direction: row;
+<<<<<<< HEAD
     
     width: 300px;
     height: 300px;   
+=======
+    width: 500px;
+    height: 500px;   
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     margin-top: 100px;
     margin-left: 150px;
     margin-right: 150px;
     justify-content: space-between;
     
+<<<<<<< HEAD
     
+=======
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
    
 }
 .footer {
     margin-top: 300px;
+<<<<<<< HEAD
     margin-left: -10px;
     margin-right: -8px;
     margin-bottom: -10px;
+=======
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
     justify-content: center;
     text-align: center;
     background-color:#ab0a1a ;
     align-items: center;
     height: 30px;
+<<<<<<< HEAD
 }
 
 img {
@@ -197,3 +232,9 @@ img {
     z-index: 100;
     transition: left 0.65s ease-out;
 }
+=======
+  
+
+}
+
+>>>>>>> 26ae637baef5a62e971373958f864edabf250f19
