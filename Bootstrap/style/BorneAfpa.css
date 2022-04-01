@@ -1,5 +1,33 @@
 *{box-sizing:border-box}
 
+
+h1 {
+    display: flex;
+    justify-content: center;
+    background-color:  #87bb34;
+    padding: 10px;    
+}
+p {
+    display: flex;
+    text-align: center   ;
+    justify-content: center; 
+}
+h4 {
+    display: flex;
+    text-align: center ;
+    justify-content: center; 
+}
+.formation {
+    background-color:  #e3007e;
+}
+
+
+
+
+
+
+
+
 img{max-width:65%}
 
 .caroussel_diapo input{position:absolute;left:-9999px}
@@ -198,3 +226,4 @@ transform:rotateY(45deg) translateZ(540px) scale(1)
     
     transform:rotateY(315deg) translateZ(540px) scale(1)
         
+}
