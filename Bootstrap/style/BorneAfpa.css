@@ -11,6 +11,7 @@ p {
     display: flex;
     text-align: center   ;
     justify-content: center; 
+    
 }
 h4 {
     display: flex;
@@ -20,23 +21,92 @@ h4 {
 .formation {
     background-color:  #e3007e;
 }
+.fond1 {
+    background-image: url(https://www.afpa.fr/documents/21653/0/Etablissement+-+Visuel+defaut/83a45ee6-0445-4772-a649-002522afcdd4);
+    background-size: cover;
+}
+.orient {
+    margin-right: 100px;
+    margin-left: 100px;
+    background-color: #ecf3f3;
+    border: 1px solid black;
+    opacity:0.8;
+}
+.fond2 {
+    background-image: url(https://www.ut-capitole.fr/medias/photo/orientation_1555074576599-png?ID_FICHE=146347);
+    background-size: auto;
+}
+
+/* Hover */
+
+.example  {
+    cursor: pointer;
+    height: 300px;
+    position: relative;
+    overflow:visible ;
+    width: 400px;
+    text-align: center;
+  }
+  .example .fadedbox {
+  
+    position: relative;
+    bottom: 400px;
+    right: 500px;
+    color: #fff;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    opacity: 0;
+    width: 360px;
+    height: 100px;
+    padding: 130px 20px;
+  }
+  .example:hover .fadedbox {
+    opacity: 0.8;
+  }
+  .example .text {
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    transform: translateY(30px);
+    -webkit-transform: translateY(30px);
+  }
+  .example .title {
+    color: black;
+    
+    transition-delay: 0.2s;
+    transition-duration: 0.3s;
+  }
+  .example:hover .title,
+  .example:focus .title {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+  }
 
 
+/* Fin Hover */
+
+img {
+    height: 300px;
+} 
 
 
-
-
-
-
-img{max-width:65%}
 
 .caroussel_diapo input{position:absolute;left:-9999px}
     
 .caroussel_diapo{    
 position:relative;
 text-align: center;
+align-items: center;
 margin:0 auto;
-;}
+margin-top:100px;
+
+}
 
 
 .contenu_carou {
@@ -52,6 +122,7 @@ transform-style: preserve-3d;
 width: 500px;
 height: 332px;
 transition: 1s transform}
+
 
 .caroussel img {
 position: absolute;
@@ -72,58 +143,41 @@ transition: 1s transform
     
 .caroussel img:nth-child(2){
     
-    transform:rotateY(45deg) translateZ(540px) scale(.8)
+    transform:rotateY(60deg) translateZ(540px) scale(.8)
     
     }
     
 .caroussel img:nth-child(3){
     
-    transform:rotateY(90deg) translateZ(540px) scale(.8)
+    transform:rotateY(120deg) translateZ(540px) scale(.8)
         
     }
     
 .caroussel img:nth-child(4){
     
-    transform:rotateY(135deg) translateZ(540px) scale(.8)
+    transform:rotateY(180deg) translateZ(540px) scale(.8)
     
     }
     
 .caroussel img:nth-child(5){
     
-    transform:rotateY(180deg) translateZ(540px) scale(.8)
+    transform:rotateY(240deg) translateZ(540px) scale(.8)
     
     }
-    
-.caroussel img:nth-child(6){
-    
-    transform:rotateY(225deg) translateZ(540px) scale(.8)
-    
-    }
-    
-.caroussel img:nth-child(7){
-    
-transform:rotateY(270deg) translateZ(540px) scale(.8)
-    
-    }
-    
-.caroussel img:nth-child(8){
-    
-transform:rotateY(315deg) translateZ(540px) scale(.8)
 
-}
 
 .caroussel_diapo input[type=radio] + label {
 cursor: pointer;
 background-color: black;
 display: inline-block;
-width: 20px;
+width: 25px;
 border-radius: 50%;
-height: 20px
+height: 25px;
     }
     
 .caroussel_diapo input[type=radio]:checked + label{
     
-    background-color:grey;
+    background-color:#87bb34;
         
     }
 
@@ -139,45 +193,28 @@ height: 20px
     
 .caroussel_diapo #carou_deux:checked ~ .contenu_carou .caroussel{
     
-transform:translateZ(-540px) rotateY(-45deg)
+transform:translateZ(-540px) rotateY(-60deg)
     
     }
     
 .caroussel_diapo #carou_trois:checked ~ .contenu_carou .caroussel{
     
-    transform:translateZ(-540px) rotateY(-90deg)
+    transform:translateZ(-540px) rotateY(-120deg)
         
     }
     
 .caroussel_diapo #carou_quatre:checked ~ .contenu_carou .caroussel{
     
-    transform:translateZ(-540px) rotateY(-135deg)
+    transform:translateZ(-540px) rotateY(-180deg)
         
     }
     
 .caroussel_diapo #carou_cinq:checked ~ .contenu_carou .caroussel{
     
-    transform:translateZ(-540px) rotateY(-180deg)
+    transform:translateZ(-540px) rotateY(-240deg)
         
     }
-    
-.caroussel_diapo #carou_six:checked ~ .contenu_carou .caroussel{
-    
-    transform:translateZ(-540px) rotateY(-225deg)
-        
-    }
-    
-.caroussel_diapo #carou_sept:checked ~ .contenu_carou .caroussel{
-    
-    transform:translateZ(-540px) rotateY(-270deg)
-    
-    }
-    
-.caroussel_diapo #carou_huit:checked ~ .contenu_carou .caroussel{
-    
-    transform:translateZ(-540px) rotateY(-315deg)
-    
-    }
+
 
 
 /*droite*/
@@ -189,41 +226,29 @@ transform:translateZ(-540px) rotateY(-45deg)
     
 .caroussel_diapo #carou_deux:checked ~ .contenu_carou .caroussel img:nth-child(2){
     
-transform:rotateY(45deg) translateZ(540px) scale(1)
+transform:rotateY(60deg) translateZ(540px) scale(1)
     
     }
 .caroussel_diapo #carou_trois:checked ~ .contenu_carou .caroussel img:nth-child(3){
     
-    transform:rotateY(90deg) translateZ(540px) scale(1)
+    transform:rotateY(120deg) translateZ(540px) scale(1)
     
     }
     
 .caroussel_diapo #carou_quatre:checked ~ .contenu_carou .caroussel img:nth-child(4){
     
-    transform:rotateY(135deg) translateZ(540px) scale(1)
+    transform:rotateY(180deg) translateZ(540px) scale(1)
     
     }
     
 .caroussel_diapo #carou_cinq:checked ~ .contenu_carou .caroussel img:nth-child(5){
     
-    transform:rotateY(180deg) translateZ(540px) scale(1)
+    transform:rotateY(240deg) translateZ(540px) scale(1)
     
     }
     
-.caroussel_diapo #carou_six:checked ~ .contenu_carou .caroussel img:nth-child(6){
-    
-    transform:rotateY(225deg) translateZ(540px) scale(1)
-    
-    }
-    
-.caroussel_diapo #carou_sept:checked ~ .contenu_carou .caroussel img:nth-child(7){
-    
-    transform:rotateY(270deg) translateZ(540px) scale(1)
-    
-    }
-    
-.caroussel_diapo #carou_huit:checked ~ .contenu_carou .caroussel img:nth-child(8){
-    
-    transform:rotateY(315deg) translateZ(540px) scale(1)
-        
+
+footer {
+    padding-top: 50px;
+    background-color: black;
 }
