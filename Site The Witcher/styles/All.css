@@ -5,8 +5,7 @@ header {
     min-height: 25rem;
     width: 100%;
     overflow: hidden;
-  }
-  
+}  
 header video {
     position: absolute;
     top: 50%;
@@ -20,13 +19,11 @@ header video {
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-  }
-  
+}  
 header .container {
     position: relative;
     z-index: 2;
-  }
-  
+}  
 header .overlay {
     position: absolute;
     top: 0;
@@ -36,21 +33,16 @@ header .overlay {
     background-color: black;
     opacity: 0.2;
     z-index: 1;
-  }
-
-
+}
 body {
     background-color: black;
     color: white;
 }
-
 .contenu {
     display: flex;
     margin:5% ; 
     flex-direction: column;
 }
-
-
 h2 {
     display: flex;
     justify-content: center;
@@ -88,6 +80,11 @@ margin-left: 100px;
     background-color: white;
 }
 footer {
-    
-
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;  
+    color: white;
+    text-align: center;
 }
