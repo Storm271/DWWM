@@ -1,0 +1,40 @@
+.synopsis {
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  text-align: center;   
+}
+img {
+  width: 700px;
+  height: 500px;
+}
+.resume {
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  justify-content: space-evenly;
+  }
+
+.txt-resume {
+  width: 700px;
+}
+.cartes {
+   
+
+ margin-left: 20%;
+ margin-right:10% ;
+
+    
+}
+.card {
+  display: flex;    
+  color: black;
+  width: 350px;
+  height: 920px;
+  margin-top: 100px;
+}
