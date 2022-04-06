@@ -108,6 +108,7 @@ footer {
     text-align: center;
 }
 /** Animation h1 et sous titre **/
+
 h1 , .sous-titre{
     transform: translateY(-600px);
     animation: 1.2s slideIn ease-in-out forwards 0.1s;
@@ -123,7 +124,6 @@ h1 , .sous-titre{
     }
   }
   
-
 /** Site full responsive jusqu'à 300px de largeur **/
 
 @media screen and (max-width: 700px) {
@@ -137,12 +137,10 @@ h1 , .sous-titre{
       max-height: 300px; 
     }
    }
-
    .table-responsive {
     min-height: .01%;
     overflow-x: auto;
 }
-
 @media screen and (max-width: 767px) {
     .table-responsive {
         width: 100%;
