@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body onload="ChargePremierePage()">
+    <form action="autrepage.html" method="get" name="parameters" target="_top">
+
+        <h1 class="Identification">Identification</h1>
+
+        <p>Nom : <input type="text" name="Nom" placeholder="Entrez votre Nom " /></p>
+
+
+        <p>Prénom : <input type="text" name="Prenom" placeholder="Entrez votre Prénom " /></p>
+
+        <p>
+            Formation suivie :
+            <select name="Formations" id="Formations">
+                <option value="">--Choisissez votre formation--</option>
+                <option value="CDA">CDA</option>
+                <option value="DWWM">DWWM</option>
+                <option value="Peintre">Peintre en bâtiment</option>
+                <option value="Cuisinier">Cuisinier</option>
+
+            </select>
+        </p>
+
+        <h1 class="Autorisation">Demande l'autorisation de s'absenter du centre</h1>
+        <br>
+
+
+
+
+
+        <div>
+            <input type="radio" id="hide" name="example" value="hide" checked />
+            <label for="hide">Un jour :</label>
+        </div>
+        <div id="box2">
+            <p>Le :
+                <input type="datetime-local" id="meeting-time" name="meeting-time" value="" min="2022-01-01T08:00"
+                    max="2022-12-24T17:00">
+            </p>
+        </div>
+        <div>
+            <input type="radio" id="show" name="example" value="show" />
+            <label for="show">Plus d'un jour</label>
+        </div>
+
+
+        <div id="box">
+
+
+            <p>Du :</p>
+            <input type="datetime-local" id="meeting-time" name="meeting-time" value="" min="2022-01-01T08:00"
+                max="2022-12-24T17:00">
+            <p>Au :</p>
+            <input type="datetime-local" id="meeting-time" name="meeting-time" value="" min="2022-01-01T08:00"
+                max="2022-12-24T17:00">
+
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <div class="preview"></div>
+        </div>
+
+        <p><input type="submit" name="Submit" value="Soumettre" /></p>
+    </form>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

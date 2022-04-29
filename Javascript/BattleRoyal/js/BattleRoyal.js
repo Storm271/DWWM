@@ -1,264 +1,382 @@
-//----------- OBJET -------------
-//-------------------------COLOR
+// On définit les variables necessaires sur toute la page.
+
+var players = [];
+var randomAttaquant = 0;
+var randomDefenseur = 0;
+var randomAncienAttaquant;
+var cptRound = 0;
+var max = 100;
+var min = 20;
+var cptPerso = 1;
+var cptCRS = 1;
+var cptGJ = 1;
+
+// Function Random
+function GenRandom(length) {
+  return Math.floor(Math.random() * length);
+}
+
+// Function CptPerso
+
+function typeperso(cpteur) {
+  if (cpteur % 2 == 0) {
+    return " GJ";
+  }
+  return " CRS";
+}
+
+// couleur
+
 function colorLog(message, color) {
+  color = color || "black";
+
   switch (color) {
-    case "mort":
-      color = "#DB011C";
-      break;
-    case "gagne":
-      color = "#0DD94E";
-      break;
-    case "vie":
-      color = "#D9B00D";
+    case "success":
+      color = "Green";
       break;
     case "info":
-      color = "#00D3FA";
+      color = "DodgerBlue";
       break;
-    case "bot":
-      color = "#B14BFA";
+    case "error":
+      color = "Red";
+      break;
+    case "warning":
+      color = "Orange";
+      break;
+    case "vainqueur":
+      color = "Purple";
+      break;
+    case "fumigene":
+      color = "White";
+      break;
+    case "canonAEau":
+      color = "Cyan";
       break;
     default:
-      color = "white";
-      break;
+      color = color;
   }
-  console.log("%c" + message, "color: " + color);
+
+  console.log("%c" + message, "color:" + color);
 }
 
-// --------------FONCTION QUI DEFINI UN NOMBRE ALEATOIRE PAR RAPPORT AU TABLEAU-------------
-const nbrJoueur = 3;
-var nbrJoueurCreer = 0;
+// Fin couleur
 
-// --------------FONCTION QUI DEFINI UN NOMBRE ALEATOIRE PAR RAPPORT AU TABLEAU-------------
+// info
 
-class personnage {
-  constructor(_nom) {
-    // ---------------FUNCTION POUR LES STATS ALEATOIRES--------------
+function info(info) {
+  colorLog(
+    "Nom : " +
+      info.GetNom() +
+      info._type +
+      "\n Vie : " +
+      info.GetVie() +
+      "\n Attaque : " +
+      info.GetAttaque() +
+      "\n Defense : " +
+      info.GetDefense(),
+    "info"
+  );
+}
+
+// fin info
+
+// Création de la classe "person" et son constructeur.
+
+class person {
+  constructor(unnom) {
+    var _nom = unnom;
     this.nombreAleatoire = function () {
-      return Math.floor(Math.random() * (100 - 20 + 1) + 20);
+      return Math.floor(Math.random() * (max - min + 1) + min);
     };
-    // ---------------FUNCTION POUR LES STATS ALEATOIRES---------------
-
-    // ------------- GET & SET ---------------------------------------
-    // -----------------------------------------EXISTE
-    var existe;
-    this.getExiste = function () {
-      return existe;
-    };
-    this.setExiste = function (_newexiste) {
-      existe = _newexiste;
-    };
-    // ---------------------------------------NOM
-    var nom = _nom;
-    this.getNom = function () {
-      return nom;
-    };
-    this.setNom = function (_newnom) {
-      nom = _newnom;
-    };
-    if (nom != "") {
-      this.setNom(nom);
-      existe = true;
+    var _vie = this.nombreAleatoire();
+    if (_vie < min) {
+      _vie = min;
     }
-    // ------------------------------VIE
-    var vie = this.nombreAleatoire();
-
-    this.getVie = function () {
-      return vie;
-    };
-    this.setVie = function (_newvie) {
-      vie = _newvie;
-    };
-    // ----------------------------------ATTAQUE
-    var attaque = this.nombreAleatoire();
-
-    this.getAttaque = function () {
-      return attaque;
-    };
-    this.setAttaque = function (_newattaque) {
-      attaque = _newattaque;
-    };
-    // ---------------------------------------DEFENSE
-    var defense = this.nombreAleatoire();
-    this.getDefense = function () {
-      return defense;
-    };
-    this.setDefense = function (_newdefense) {
-      defense = _newdefense;
-    };
-    // ------------- GET & SET ---------------------------------------
-
-    if (this.getVie() > 0) {
-      this.setExiste(true);
+    if (_vie > max) {
+      _vie = max;
     }
-    if (this.getVie() <= 0) {
-      this.setExiste(false);
+    var _attaque = this.nombreAleatoire();
+    if (_attaque < min) {
+      _attaque = min;
     }
-    // ---------------SA FUNCTION INFORMATION  ------------------------
-    this.infos = function () {
-      console.log(
-        this.getNom() +
-          " possède " +
-          this.getVie() +
-          " point de vie, " +
-          this.getAttaque() +
-          " point d'attaque et " +
-          this.getDefense() +
-          " point de défense"
-      );
+    if (_attaque > max) {
+      _attaque = max;
+    }
+    var _defense = this.nombreAleatoire();
+    if (_defense < min) {
+      _defense = min;
+    }
+    if (_defense > max) {
+      _defense = max;
+    }
+    var _existe = false;
+    this._type = "";
+    this._nextType = "crs";
+    if (unnom == undefined) {
+      colorLog("LE PERSONNAGE N'A PAS PU ETRE CREE !!", "error");
+    } else {
+      colorLog("Nouveau personnage: " + _nom + " créé!", "success");
+      _existe = true;
+    }
+    //On crée des fonctions pour pouvoir appeler les attibuts qui sont en privé dans la classe.
+
+    this.GetNom = function () {
+      return _nom;
     };
-    // ---------------SA FUNCTION INFORMATION  ------------------------
+    this.GetVie = function () {
+      return _vie;
+    };
+    this.SetVie = function (newvie) {
+      _vie = newvie;
+      if (_vie <= 0) {
+        _existe = false;
+        _vie = 0;
+        colorLog("Le personnage " + _nom + this._type + " est dead.", "error");
+      }
+    };
+    this.GetAttaque = function () {
+      return _attaque;
+    };
 
-    // ----------------------------------------------------------------
+    this.GetDefense = function () {
+      return _defense;
+    };
+    this.GetExiste = function () {
+      return _existe;
+    };
+    this.SetExiste = function (newexiste) {
+      _existe = newexiste;
+    };
+    this.SetNom = function (newnom) {
+      _nom = newnom;
+    };
 
-    // ---------------SA FUNCTION ATTAQUER-----------------------------
+    //methode attaquer :
+
     this.attaquer = function (defenseur) {
       colorLog(
-        this.getNom() + " bourre la gueule à  " + defenseur.getNom(),
-        "bot"
+        "Round : " +
+          cptRound +
+          "\nNouvelle attaque de " +
+          _nom +
+          this._type +
+          " sur " +
+          defenseur.GetNom() +
+          defenseur._type +
+          " !!",
+        "warning"
       );
-      if (this.getAttaque() > defenseur.getDefense()) {
-        defenseur.setVie(defenseur.getVie() - 10);
-      } else if (this.getAttaque() == defenseur.getDefense()) {
-        defenseur.setVie(defenseur.getVie() - 5);
+      if (_attaque > defenseur.GetDefense()) {
+        defenseur.SetVie(defenseur.GetVie() - 10);
       } else {
-        this.setVie(this.getVie() - 5);
-      }
-      colorLog(
-        this.getNom() + " possède " + this.getVie() + " point de vie ",
-        "vie"
-      );
-      colorLog(
-        defenseur.getNom() +
-          " possède " +
-          defenseur.getVie() +
-          " point de vie ",
-        "vie"
-      );
-
-      if (this.getVie() <= 0) {
-        colorLog(this.getNom() + " a succombé a ses blessures ", "mort");
-        this.setExiste(false);
-        nbrJoueurCreer -= 1;
-      }
-      if (defenseur.getVie() <= 0) {
-        colorLog(defenseur.getNom() + " a succombé a ses blessures ", "mort");
-        defenseur.setExiste(false);
-        nbrJoueurCreer -= 1;
-      }
-    };
-    // ---------------SA FUNCTION ATTAQUER-----------------------------
-  }
-}
-//----------- OBJET -------------
-
-//---------------------------------------------------------- LES FONCTIONS--------------------------------------------------------------
-
-// --------------FONCTION QUI DEFINI UN NOMBRE ALEATOIRE POUR LES STATS -----------------------------------
-
-// --------------FONCTION QUI DEFINI UN NOMBRE ALEATOIRE POUR LES STATS -----------------------------------
-
-class match {
-  constructor() {
-    // --------------FONCTION LANCER LE COMBAT-------------
-
-    this.run = function () {
-      var tableau = new Array();
-
-      // ON CREER UN TABLEAU
-
-      var nom = "";
-
-      function tableauAleatoire() {
-        return Math.floor(Math.random() * tableau.length);
-      }
-
-      // BOUCLE POUR CREER DES PERSONNAGE JUSQU'A CE QUE LE NOMBRE DE JOUEUR CREER = NOMBRE DE JOUEUR, RENITIALISE LE NOM APRES L'AVOIR ENVOYER
-      // DANS LE TABLEAU POUR POUVOIR RETOURNER AU DEBUT DU WHILE TANT QUE NOMBRE DE JOUEUR CREER N'EST PAS EGAL A NOMBRE DE JOUEUR
-
-      while (nom == "" && nbrJoueurCreer < nbrJoueur) {
-        // Prompt( On saisie le nom des personnages);//
-
-        nom = prompt("Saisis moi un nom");
-
-        // Prompt( On saisie le nom des personnages);//
-
-        if (nom != "") {
-          console.log("Vous avez créer " + nom);
-
-          // CREATION D'UN PERSONNAGE A PARTIR DE LA CLASS PERSONNAGE
-
-          var perso = new personnage(nom);
-
-          // DEMANDE LES INFORMATIONS DU PERSONNAGE (L'OBJET)
-
-          perso.infos();
-
-          // ON ENVOIE LE PERSONNAGE DANS LE TABLEAU
-
-          tableau.push(perso);
-          nbrJoueurCreer += 1;
-          nom = "";
-          colorLog("Nombre de joueur creer " + nbrJoueurCreer, "info");
-        }
-      }
-      // ON DEFINIT UN ATTAQUANT, UN DEFENSEUR ET UN ANCIEN ATTAQUANT
-
-      let randomAttq;
-      let randomDef;
-      let randomOldAttq = -1;
-
-      // TANT QUE LA LONGUEUR DU TABLEAU EST SUPERIEUR A  1 ON DONNE UNE NOMBRE ALEATOIRE A L'ATTAQUANT ET AU DEFENSEUR
-      // A L'AIDE DE LA FONCTION "tableauAleatoire"
-      //------------------------------ DEBUT DE LA BOUCLE------------------------------
-      while (tableau.length > 1) {
-        randomAttq = tableauAleatoire();
-        randomDef = tableauAleatoire();
-
-        // SI L'ATTAQUANT EST DIFFERENT DE L'ANCIEN ATTAQUANT ET SI L'ATTAQUANT EST DIFFERENT DU DEFENSEUR, L'ATTAQUANT ATTAQUE LE DEFENSEUR
-
-        if (randomAttq != randomOldAttq) {
-          try {
-            if (randomAttq != randomDef) {
-              tableau[randomAttq].attaquer(tableau[randomDef]);
-
-              // SI l'ATTAQUANT N'EXISTE PLUS LE RETIRER DU TABLEAU GRACE A SPLICE
-
-              if (tableau[randomAttq].getExiste() == false) {
-                tableau.splice(randomAttq, 1);
-              }
-
-              // SI LE DEFENSEUR N'EXISTE PLUS LE RETIRER DU TABLEAU GRACE A SPLICE
-
-              if (tableau[randomDef].getExiste() == false) {
-                tableau.splice(randomDef, 1);
-              }
-
-              // L'ATTAQUANT DONNE SA VALEUR A L'ANCIEN ATTAQUANT
-
-              randomOldAttq = randomAttq;
-            }
-          } catch (error) {
-            alert(
-              "on essaye d'accéder à un élément du tableau qui n'existe plus"
-            );
+        if (_attaque == defenseur.GetDefense()) {
+          defenseur.SetVie(defenseur.GetVie() - 5);
+        } else {
+          if (_attaque < defenseur.GetDefense()) {
+            this.SetVie(_vie - 5);
           }
         }
       }
-      //------------------------------ FIN DE LA BOUCLE------------------------------
-      colorLog(perso.getNom() + " Gagne le combat !", "gagne");
+      if (this.GetExiste() == false) {
+        players.splice(randomAttaquant, 1);
+      } else if (defenseur.GetExiste() == false) {
+        players.splice(randomDefenseur, 1);
+      }
 
-      // --------------FONCTION COMBAT-------------
-
-      //---------------------------------------------------------- LES FONCTIONS--------------------------------------------------------------
-
-      // ON CREER UN TABLEAU
+      info(this);
+      info(defenseur);
     };
   }
 }
 
-let m = new match();
-m.run();
+// Création de la classe CRS
 
-// ON LANCE LE COMBAT
+class CRS extends person {
+  constructor(unnom, unarg) {
+    super(unnom);
+    this.arg = unarg;
 
-// ON LANCE LE COMBAT
+    this._attaque = this.GetAttaque() + 5;
+    this._defense = this.GetDefense() + 5;
+    this._vie = this.GetVie() - 5;
+    this._type = " qui est un CRS";
+
+    // methode attaquer GJ de la classe CRS
+    this.attaquerGJ = function (gj) {
+      var chance = Math.floor(Math.random() * 10 + 1);
+      if (chance < 10 && chance > 2) {
+        this.fumigene(gj);
+      } else if (chance == 10) {
+        this.canonAEau(gj);
+      } else {
+        this.normale(gj);
+      }
+      //console.log(chance);
+      this.attaquer(gj);
+    };
+    // méthode fumigene
+    this.fumigene = function (gj) {
+      colorLog("attaque fumigene", "fumigene");
+      gj.SetVie(gj.GetVie() - 5);
+    };
+
+    // méthode canonAEau
+    this.canonAEau = function (gj) {
+      colorLog("canon à eau", "canonAEau");
+      gj.SetVie(gj.GetVie() - 10);
+    };
+
+    // méthode attaque normale
+    this.normale = function (gj) {
+      console.log("PAS DE COUPS SPECIAUX");
+    };
+  }
+}
+
+class GJ extends person {
+  constructor(unnom, unarg) {
+    super(unnom);
+    this.arg = unarg;
+
+    this._attaque = this.GetAttaque() - 5;
+    this._defense = this.GetDefense() - 5;
+    this._vie = this.GetVie() + 5;
+    this._type = " qui est un Gilet Jaune";
+
+    // methode attaquer CRS de la classe GJ
+    this.attaquerCRS = function (crs) {
+      var chance = Math.floor(Math.random() * 10 + 1);
+      if (chance < 10 && chance > 2) {
+        this.caillassage(crs);
+      } else if (chance == 10) {
+        this.mouvementdefoule(crs);
+      } else {
+        this.normale(crs);
+      }
+      //console.log(chance);
+      this.attaquer(crs);
+    };
+    // méthode caillassage
+    this.caillassage = function (crs) {
+      console.log("CAILLASSAGE !!!! ");
+      crs.SetVie(crs.GetVie() - 5);
+    };
+
+    // méthode Mouvement de Foule
+    this.mouvementdefoule = function (crs) {
+      console.log("Mouvement de foule");
+      crs.SetVie(crs.GetVie() - 15);
+    };
+    // méthode attaque normale
+    this.normale = function (crs) {
+      console.log("PAS DE COUPS SPECIAUX");
+    };
+  }
+}
+
+// Création de la classe "match" et son constructeur.
+
+class match {
+  constructor() {
+    var Choixpersonnage;
+    var nbrJoueur;
+    var ok = true;
+
+    //Création de la fonction pour créer un personnage.
+
+    this.CreerPersonnages = function () {
+      nbrJoueur = parseInt(
+        prompt(
+          "Choisissez le nombre de personnages que vous souhaitez creer : "
+        )
+      );
+      if (nbrJoueur % 2 != 0) {
+        alert("Le nombre de joueurs n'est pas pair.");
+        location.reload();
+      } else {
+        do {
+          if (players.length % 2 == 0) {
+            Choixpersonnage = "CRS n° " + cptCRS;
+            var perso = new CRS(Choixpersonnage);
+            cptCRS++;
+          } else {
+            Choixpersonnage = "Gilet Jaune n° " + cptGJ;
+            var perso = new GJ(Choixpersonnage);
+            cptGJ++;
+          }
+          info(perso);
+
+          players.push(perso);
+          console.log("nb CRS " + (cptCRS - 1));
+          console.log("nb GJ " + (cptGJ - 1));
+
+          cptPerso++;
+        } while (nbrJoueur != players.length);
+      }
+    };
+
+    function win(players) {
+      if (players.some((player) => player._type === " qui est un CRS")) {
+        colorLog(
+          "Les CRS sont les vainqueurs ! Au round : " + cptRound,
+          "vainqueur"
+        );
+        alert(
+          "Les CRS sont les vainqueurs ! Au round : " + cptRound,
+          "vainqueur"
+        );
+      } else if (
+        players.some((player) => player._type === " qui est un Gilet Jaune")
+      ) {
+        colorLog(
+          "Les Gilets Jaunes sont les vainqueurs ! Au round : " + cptRound,
+          "vainqueur"
+        );
+        alert(
+          "Les Gilets Jaunes sont les vainqueurs ! Au round : " + cptRound,
+          "vainqueur"
+        );
+      }
+
+      for (let k = 0; k < players.length; k++) {
+        console.log(
+          "Le " + players[k].GetNom() + " est toujours en vie! Bravo !"
+        );
+      }
+    }
+    // Création de la fonction pour lancer le combat.
+    this.RunMatch = function () {
+      while (
+        players.some((player) => player._type === " qui est un CRS") &&
+        players.some((player) => player._type === " qui est un Gilet Jaune")
+      ) {
+        randomAttaquant = GenRandom(players.length);
+        var attaquant = players[randomAttaquant];
+        randomDefenseur = GenRandom(players.length);
+        var defenseur = players[randomDefenseur];
+
+        if (randomAncienAttaquant != randomAttaquant) {
+          if (randomAttaquant != randomDefenseur) {
+            if (attaquant._type != defenseur._type) {
+              cptRound++;
+
+              if (attaquant._type == " qui est un CRS") {
+                attaquant.attaquerGJ(defenseur);
+              } else {
+                attaquant.attaquerCRS(defenseur);
+              }
+
+              randomAncienAttaquant = randomAttaquant;
+            }
+          }
+        }
+      }
+      win(players);
+    };
+  }
+}
+//on execute les fonctions de création de personnage et de lancement de combat.
+
+var unmatch = new match();
+unmatch.CreerPersonnages();
+unmatch.RunMatch();

@@ -1,0 +1,52 @@
+{
+"Name" : "Chez Pedro",
+"Slogan" : "Pizzaïolo de père en fils depuis 2022",
+"Pizzas" : [
+{
+    "Nom" : "La Cheese Lover ",
+    "Image" : " https://www.delicespizza27.fr/binary_resources/11070117  ",
+    "Prix" : "12.90 €",
+    "Ingredients" : [
+        "Feta" ,
+        "Bleu", 
+        "Mozza",
+        "Parmesan",
+        "Raclette",
+        "Camembert",
+        "Asiago"
+    ]    
+},
+{
+    "Nom" : "L'interdite",
+    "Image" : " https://www.delicespizza27.fr/binary_resources/11070111 ",
+    "Prix" : "58,90 €",
+    "Ingredients" : [
+        "Mozza" ,
+        "Pepperonis", 
+        "Ananas",
+        "Olives"
+    ]    
+},
+{
+    "Nom" : "La Dépréssion ",
+    "Image" : " https://i-sam.unimedias.fr/2021/09/21/femme-deprimee.jpg?auto=format%2Ccompress&crop=faces&cs=tinysrgb&fit=crop&h=675&w=1200  ",
+    "Prix" : "Gratuit",
+    "Ingredients" : [
+        "Solitude" ,
+        "Doutes", 
+        "Tristesse",
+        "Inquietudes",
+        "Mozza"
+    ]    
+}
+
+
+
+
+
+
+
+
+
+]
+}
