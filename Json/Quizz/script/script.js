@@ -1,45 +1,75 @@
-function ChargeInfosJson() {
-  fetch("format_quiz.json")
+let data;
+let currentQueryIndex = 0;
+
+function selectChoice(index) {
+  console.log(index);
+}
+
+function goToIndex(index) {
+  if (index < 0 || index >= data.length) {
+    console.log(`Error: invalid index value ${index}`);
+    return;
+  }
+
+  console.log(`Go to ${index}`);
+
+  const query = data[index];
+  const tmpl = buildQueryTemplate(query);
+
+  const containerElt = document.getElementById("quizz-container");
+  containerElt.innerHTML = "";
+  containerElt.appendChild(tmpl);
+}
+
+function buildQueryTemplate(defQuery) {
+  const formElt = document.createElement("div");
+
+  const titleElt = document.createElement("h3");
+  titleElt.innerHTML = defQuery.question;
+  titleElt.setAttribute("class", "ennonce");
+
+  const detailsElt = document.createElement("p");
+  detailsElt.innerHTML = defQuery.explanation;
+  detailsElt.setAttribute("class", "ennonce");
+
+  const choicesElt = document.createElement("ul");
+  choicesElt.setAttribute("class", "contenu");
+
+  defQuery.choices.forEach(function (choice, index) {
+    const choiceLiElt = document.createElement("button");
+    choiceLiElt.id = `button${index}`;
+    choiceLiElt.setAttribute("class", "choix");
+    choiceLiElt.innerHTML = choice;
+    choiceLiElt.addEventListener("click", function () {
+      selectChoice(index);
+    });
+    choicesElt.appendChild(choiceLiElt);
+  });
+
+  formElt.appendChild(titleElt);
+  formElt.appendChild(detailsElt);
+  formElt.appendChild(choicesElt);
+
+  return formElt;
+}
+
+function loadAsJson(url) {
+  return fetch(url)
     .then((response) => {
       return response.json();
     })
-    .then((data) => {
-      console.log(data);
-      CreateDivs(data);
+    .catch((error) => {
+      console.log(`Error: ${error.message}`);
     });
 }
 
-function CreateDivs(data) {
-  const preview = document.getElementsByClassName("preview")[0];
-  preview.innerHTML = "";
-
-  var listData = data;
-  for (var y = 0; y < listData.length; y++) {
-    const ennonce = document.createElement("div");
-    ennonce.innerHTML = listData[y].question;
-    ennonce.setAttribute("class", "ennonce");
-
-    const explication = document.createElement("div");
-    explication.innerHTML = listData[y].explanation;
-    explication.setAttribute("class", "explication");
-
-    preview.appendChild(ennonce);
-    preview.appendChild(explication);
-
-    const questions = document.createElement("div");
-
-    questions.setAttribute("class", "contenu");
-    questions.setAttribute("id", "questions");
-
-    var listQuestions = listData[y].choices;
-    for (var x = 0; x < listQuestions.length; x++) {
-      var choix = document.createElement("div");
-      choix.setAttribute("class", "card");
-      choix.innerHTML += '<li class="choix">' + listQuestions[x] + "</li>";
-
-      questions.appendChild(choix);
-    }
-    preview.appendChild(questions);
-  }
-}
-ChargeInfosJson();
+loadAsJson("script/format_quiz.json").then((dataJson) => {
+  data = dataJson;
+  const nextBtnElt = document.getElementById("goNext");
+  console.log(nextBtnElt);
+  nextBtnElt.addEventListener("click", function () {
+    currentQueryIndex = currentQueryIndex + 1;
+    goToIndex(currentQueryIndex);
+  });
+  goToIndex(currentQueryIndex);
+});

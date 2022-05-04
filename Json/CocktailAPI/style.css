@@ -1,0 +1,39 @@
+body{
+    background-color: black;
+    color: gold;
+    
+}
+
+#searchbar{
+    display:block;
+    text-align:center;
+    margin-top: 5%;
+   
+}
+#randomCocktail, #zone_cocktail  {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10%;
+    margin-left: 8%;
+    margin-right: 8%;
+   
+}
+img {
+    height: 250px;
+    width: 250px;
+
+}
+
+card {
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+height: 500px;
+width: 250px;
+text-align: center;
+}
+h1{
+    font-size:x-large;
+}
