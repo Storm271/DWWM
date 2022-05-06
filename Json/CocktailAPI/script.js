@@ -12,7 +12,12 @@ var callBackSuccess = function (data) {
   // Permet de créer plusieurs div
   var element2 = document.createElement("card");
   element2.innerHTML =
-    "<h1>" + cocktailAléatoire + "</h1>" + "<img src=" + image + ">";
+    "<h1>" +
+    cocktailAléatoire +
+    "</h1>" +
+    "<a href='page2.html'><img src=" +
+    image +
+    "></a>";
   element.appendChild(element2);
 
   for (let i = 1; i < 16; i++) {
@@ -80,13 +85,14 @@ var callBackGetSuccess = function (data) {
   // Enleve la dernière recherche quand on clique sur le bouton
   element.innerHTML = "";
   // ----------------------------------------------------------
-  for (let i = 0; i < data.drinks.length; i++) {
+  for (let i = 0; i <= data.drinks.length; i++) {
     // Permet de créer plusieurs div
-    var element2 = document.createElement("div");
+    var element2 = document.createElement("card");
     element2.innerHTML =
+      "<a href ='page2.html'>" +
       "<img src='" +
       data.drinks[i].strDrinkThumb +
-      "/preview'><p>" +
+      "/preview'></a><p>" +
       data.drinks[i].strDrink +
       "</p>";
     element.appendChild(element2);
@@ -101,12 +107,13 @@ var callBackGetTest = function (data) {
   console.log(data);
   var element = document.getElementById("zone_cocktail");
   element.innerHTML = "";
-  for (let i = 0; i < data.drinks.length; i++) {
-    var element2 = document.createElement("div");
+  for (let i = 0; i <= data.drinks.length; i++) {
+    var element2 = document.createElement("card");
     element2.innerHTML =
+      "<a href ='page2.html'>" +
       "<img src='" +
       data.drinks[i].strDrinkThumb +
-      "/preview'><p>" +
+      "/preview'></a><p>" +
       data.drinks[i].strDrink +
       "</p>";
     element.appendChild(element2);
