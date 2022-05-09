@@ -5,7 +5,8 @@ header {
     min-height: 25rem;
     width: 100%;
     overflow: hidden;
-}  
+}
+
 header video {
     position: absolute;
     top: 50%;
@@ -19,11 +20,13 @@ header video {
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-}  
+}
+
 header .container {
     position: relative;
     z-index: 2;
-}  
+}
+
 header .overlay {
     position: absolute;
     top: 0;
@@ -34,25 +37,30 @@ header .overlay {
     opacity: 0.2;
     z-index: 1;
 }
+
 .container {
     min-height: 100vh;
     position: relative;
-    width: 100vw;  
-    justify-content: center;   
+    width: 100vw;
+    justify-content: center;
 }
+
 body {
     background-color: black;
     color: white;
 }
+
 .contenu {
     display: flex;
-    margin:5% ; 
+    margin: 5%;
     flex-direction: column;
 }
+
 img {
     width: 700px;
     height: 500px;
 }
+
 .resume {
     display: flex;
     justify-content: center;
@@ -60,87 +68,125 @@ img {
     align-items: center;
     text-align: justify;
     justify-content: space-evenly;
-}  
+}
+
 .txt-resume {
     width: 700px;
     margin-top: 100px;
 }
-h2, h3 {
+
+h2,
+h3 {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
     margin-bottom: 50px;
 }
-li, ul {
+
+li,
+ul {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-left: 5px;
-    margin-bottom:0% ;
+
+    margin-bottom: 0%;
     padding-top: 2px;
     padding-bottom: 4px;
     font-size: 10px;
     background-color: #333333;
 }
+
 .nav-link {
     display: flex;
     justify-content: space-between;
     margin-left: 50px;
     margin-right: 50px;
 }
+
 .navbar-expand-lg .navbar-collapse {
-    display: flex!important;
+    display: flex !important;
     flex-basis: auto;
     justify-content: space-evenly;
 }
+
 .table {
-    background-color: white;    
+    background-color: white;
 }
+
 footer {
     position: fixed;
-    left: 0;
-    right: 0;
+
     bottom: 0;
-    width: 100%;  
+    width: 100%;
     color: white;
     text-align: center;
 }
+
+footer ul {
+
+    background: #212529;
+}
+
+footer li {
+    background: #212529;
+}
+
+footer a {
+    background: #212529;
+    padding-left: 5px;
+}
+
 /** Animation h1 et sous titre **/
 
-h1 , .sous-titre{
+h1,
+.sous-titre {
     transform: translateY(-600px);
     animation: 1.2s slideIn ease-in-out forwards 0.1s;
     z-index: 10;
     opacity: 0;
     position: relative;
-  }
-     
-  @keyframes slideIn {
+}
+/* Animation au scroll */
+
+.reveal{
+    opacity: 0;
+    transform: translateY(120px);
+}
+.reveal-visible{
+    opacity: 1;
+    transform: translateY(0) ;
+    transition: 1s cubic-bezier(.5,0,0,1);
+}
+
+@keyframes slideIn {
     100% {
-      transform: translateY(0px);
-      opacity: 1;
+        transform: translateY(0px);
+        opacity: 1;
     }
-  }
-  
+}
+
 /** Site full responsive jusqu'à 300px de largeur **/
 
 @media screen and (max-width: 700px) {
     .novigrad-img {
-      max-width: 500px; 
+        max-width: 500px;
     }
-   }
-   @media screen and (max-width: 500px) {
+}
+
+@media screen and (max-width: 500px) {
     .novigrad-img {
-      max-width: 300px;
-      max-height: 300px; 
+        max-width: 300px;
+        max-height: 300px;
     }
-   }
-   .table-responsive {
+}
+
+.table-responsive {
     min-height: .01%;
     overflow-x: auto;
 }
+
 @media screen and (max-width: 767px) {
     .table-responsive {
         width: 100%;
@@ -149,16 +195,17 @@ h1 , .sous-titre{
         -ms-overflow-style: -ms-autohiding-scrollbar;
         border: 1px solid #ddd;
     }
-    .table-responsive > .table {
+
+    .table-responsive>.table {
         margin-bottom: 0;
     }
-    .table-responsive > .table > thead > tr > th,
-    .table-responsive > .table > tbody > tr > th,
-    .table-responsive > .table > tfoot > tr > th,
-    .table-responsive > .table > thead > tr > td,
-    .table-responsive > .table > tbody > tr > td,
-    .table-responsive > .table > tfoot > tr > td {
+
+    .table-responsive>.table>thead>tr>th,
+    .table-responsive>.table>tbody>tr>th,
+    .table-responsive>.table>tfoot>tr>th,
+    .table-responsive>.table>thead>tr>td,
+    .table-responsive>.table>tbody>tr>td,
+    .table-responsive>.table>tfoot>tr>td {
         white-space: nowrap;
     }
 }
-
