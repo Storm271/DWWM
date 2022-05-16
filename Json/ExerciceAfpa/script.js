@@ -37,7 +37,7 @@ function fetchJson() {
     const listCodes = document.createElement("div");
 
     listCodes.setAttribute("class", "Codes"); //contenu A utiliser uniquement pour le CSS si besoin
-    listCodes.setAttribute("id", "idCodes"); //PizzaList
+    listCodes.setAttribute("id", "idCodes");
 
     var Codes = data.members;
     for (var x = 0; x < Codes.length; x++) {

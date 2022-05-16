@@ -12,12 +12,7 @@ var callBackSuccess = function (data) {
   // Permet de créer plusieurs div
   var element2 = document.createElement("card");
   element2.innerHTML =
-    "<h1>" +
-    cocktailAléatoire +
-    "</h1>" +
-    "<a href='page2.html'><img src=" +
-    image +
-    "></a>";
+    "<h1>" + cocktailAléatoire + "</h1>" + "<img src=" + image + ">";
   element.appendChild(element2);
 
   for (let i = 1; i < 16; i++) {
@@ -89,10 +84,9 @@ var callBackGetSuccess = function (data) {
     // Permet de créer plusieurs div
     var element2 = document.createElement("card");
     element2.innerHTML =
-      "<a href ='page2.html'>" +
       "<img src='" +
       data.drinks[i].strDrinkThumb +
-      "/preview'></a><p>" +
+      "/preview'><p>" +
       data.drinks[i].strDrink +
       "</p>";
     element.appendChild(element2);
@@ -110,10 +104,9 @@ var callBackGetTest = function (data) {
   for (let i = 0; i <= data.drinks.length; i++) {
     var element2 = document.createElement("card");
     element2.innerHTML =
-      "<a href ='page2.html'>" +
       "<img src='" +
       data.drinks[i].strDrinkThumb +
-      "/preview'></a><p>" +
+      "/preview'><p>" +
       data.drinks[i].strDrink +
       "</p>";
     element.appendChild(element2);

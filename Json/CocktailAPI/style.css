@@ -47,7 +47,7 @@ h1{
     background-color: rgb(110, 14, 14);
     opacity: 90%;
 }
-#imgBar {
+.imgBar {
     height: 48px;
     width: 50px;    
 }
