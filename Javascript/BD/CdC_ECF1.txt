@@ -13,19 +13,13 @@ Il s'agit :
 - Toutes autres fonctionnalités que vous jugerez intéressantes....
 
 
-Ceci en Mobile first, sans oublier pour autant les PC de bureau. 
-Un visuel sympa, ergonomique, facile d'utilisation.
+Ceci en Mobile first, sans oublier pour autant les PC de bureau. Un visuel sympa, ergonomique, facile d'utilisation.
 
 
-Une précision importante : les ventes de bandes dessinées sont plus 
-importantes lorsque la météo est mauvaise, on vous demande donc de gérer un encart météo.
-Il vous faudra trouver un site proposant une API météo et l'interroger 
-avec des requêtes Ajax/jQuery/JS (la méthode qui vous convient le mieux) 
-pour récupérer les informations.
+Une précision importante : les ventes de bandes dessinées sont plus importantes lorsque la météo est mauvaise, on vous demande donc de gérer un encart météo.
+Il vous faudra trouver un site proposant une API météo et l'interroger avec des requêtes Ajax/jQuery/JS (la méthode qui vous convient le mieux) pour récupérer les informations.
 
-L'indentation, les commentaires, les conventions de nommage (Camel Case) 
-auront une part importante dans la notation de l'ECF
+L'indentation, les commentaires, les conventions de nommage (Camel Case) auront une part importante dans la notation de l'ECF
 
-Après avoir contacté l'équipe qui gère le site actuel, ils confirment qu'ils 
-prendront en charge la base de données mais pas tout de suite car trop de boulot !
+Après avoir contacté l'équipe qui gère le site actuel, ils confirment qu'ils prendront en charge la base de données mais pas tout de suite car trop de boulot !
 

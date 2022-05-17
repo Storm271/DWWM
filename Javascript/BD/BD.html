@@ -14,9 +14,6 @@
 <body>
     <div class="container">
         <h1>Liste des BD</h1>
-        <br>
-       
-          <br>
 
         <div class="row">
             <div class="col-sm-4 col-lg-6">
@@ -26,16 +23,16 @@
                 </p>
                 <p>
                     <label for="serie">Série :</label>
-                    <input type="text" id="serie" value=" "  title="Saisissez un numéro et validez">
+                    <input type="text" id="serie" readonly>
 
                     <label for="numero">Album N° :</label>
                     <input type="text" id="numero" readonly>
 
                     <label for="titre">Titre :</label>
-                    <input type="text" id="titre"  value=" "  title="Saisissez un titre et validez">
+                    <input type="text" id="titre" readonly>
 
                     <label for="auteur">Auteur :</label>
-                    <input type="text" id="auteur"  value=" "  title="Saisissez un auteur et validez">
+                    <input type="text" id="auteur" readonly>
                 </p>
                 <p>
                     <label for="prix">Prix :</label>
@@ -52,21 +49,47 @@
             </div>
 
         </div>
-        <br>
+
+
+
         <div id="searchbar">
-            <label for="searchBySerie">Série</label>
-            <input type="checkbox" id="searchBySerie" />
-            <label for="searchByAuteur">Auteur</label>
-            <input type="checkbox" id="searchByAuteur" />
-            <label for="searchByTitre">Titre</label>
-            <input type="checkbox" id="searchByTitre" />
+            <label for="Author">Auteur</label>
+            <input type="checkbox" id="Author" />
+            <label for="Serie">Serie</label>
+            <input type="checkbox" id="Serie" />
+            <label for="Title">Titre</label>
+            <input type="checkbox" id="Title" />
             <br />
         
             <input type="text" id="queryLoc" value="" />
             <input type="button" value="Search" onclick="buttonClickGET()" />
           </div>
-          <br>
-          <div id="zone_BD"></div>
+
+
+
+
+          <div class="table">
+            
+            <h3 class="table-title">Album</h3>
+            <h3 class="table-title">Titre</h3>
+            <h3 class="table-title">Série</h3>
+            <h3 class="table-title">Auteur</h3>
+            <h3 class="table-title">Prix</h3>
+            <h3 class="table-title">Achat</h3>
+        </div>
+
+        <div id="tableau">
+
+
+
+
+        </div>
+          <div id="randomCocktail"></div>
+          <div id="zone_cocktail"></div>
+
+
+
+
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
