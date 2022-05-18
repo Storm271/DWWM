@@ -3,76 +3,8 @@ const albumDefaultMini = srcImg + "noComicsMini.jpeg";
 const albumDefault = srcImg + "noComics.jpeg";
 const srcAlbumMini = "albumsMini/"; // emplacement des images des albums en petit
 const srcAlbum = "albums/"; // emplacement des images des albums en grand
+searchResult = document.getElementById("tableau");
 jQuery(document).ready(function ($) {
-  /*
-	// Lecture d'un album
-	console.log("Lecture d'un album");
-	var album = albums.get("5");
-	var serie = series.get(album.idSerie);
-	var auteur = auteurs.get(album.idAuteur);
-	console.log(album.titre+" "+serie.nom+" "+auteur.nom);
-	*/
-
-  /*
-	console.log("Liste des albums");
-	albums.forEach(album => {
-	    serie = series.get(album.idSerie);
-	    auteur = auteurs.get(album.idAuteur);
-	    console.log(album.titre+" N°"+album.numero+" Série:"+serie.nom+" Auteur:"+auteur.nom);
-	});
-	*/
-
-  /*
-	console.log("Liste des albums par série");
-	for(var [idSerie, serie] of series.entries()) {
-	    // Recherche des albums de la série
-	    for (var [idAlbum, album] of albums.entries()) {
-	        if (album.idSerie == idSerie) {
-	            console.log(serie.nom+", Album N°"+album.numero+" "+album.titre+", Auteur:"+auteurs.get(album.idAuteur).nom);
-	        }
-	    }
-	    
-	}
-	*/
-
-  //   console.log("Liste des albums par auteur");
-  //   for (var [idAuteur, auteur] of auteurs.entries()) {
-  //     // Recherche des albums de l'auteur
-  //     for (var [idAlbum, album] of albums.entries()) {
-  //       if (album.idAuteur == idAuteur) {
-  //         console.log(
-  //           auteur.nom +
-  //             ", Album N°" +
-  //             album.numero +
-  //             " " +
-  //             album.titre +
-  //             ", Série:" +
-  //             series.get(album.idSerie).nom
-  //         );
-  //       }
-  //     }
-  //   }
-
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-
-  //on fait une recherche sur la map des albums:
-  //EX: Je ne veux que les albums avec l'auteur Arleston, Mourier (idAuteur=11)
-
-  // Dans un premier temps on va aller recupérer l'id de l'auteur selon la saisie utilisateur (qui sera un input)
-
-  //
-  //
-  //
-  //
-  //
-  //
-
   // Affichage des BD
   var txtSerie = document.getElementById("serie");
   var txtNumero = document.getElementById("numero");
@@ -222,8 +154,6 @@ Title.addEventListener("change", function () {
 });
 
 function buttonClickGET() {
-  var element = document.getElementById("randomCocktail");
-
   if (Author.checked) {
     searchByAuthor();
   }
@@ -242,27 +172,48 @@ function searchByAuthor() {
     if (auteur.nom == queryLoc) {
       //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-      console.log("on est làààààààààà  " + idAuteur);
+
       idAuteurToSave = parseInt(idAuteur);
+
       break;
     }
   }
 
   // on a notre idAuteur, on fait notre petit filtre
   if (idAuteurToSave > 0) {
+    searchResult.innerHTML = "";
     for (var [idAlbum, album] of albums.entries()) {
       if (album.idAuteur == idAuteurToSave) {
         serie = series.get(album.idSerie);
         auteur = auteurs.get(album.idAuteur);
-        console.log(
+        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
+        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+        const tableAuteur = document.createElement("div");
+        tableAuteur.setAttribute("class", "table-item");
+        tableAuteur.innerHTML +=
+          '<div class = "container-image">' +
+          '<img src="' +
+          srcAlbum +
+          nomFic +
+          ".jpg" +
+          '"/>' +
+          "</div>" +
+          '<p class="album">' +
           album.titre +
-            " N°" +
-            album.numero +
-            " Série:" +
-            serie.nom +
-            " Auteur:" +
-            auteur.nom
-        );
+          "</p>" +
+          '<p classe="titre">' +
+          serie.nom +
+          "</p>" +
+          '<p classe="auteur">' +
+          auteur.nom +
+          "</p>" +
+          '<p class="prix">' +
+          album.prix +
+          "€" +
+          "</p>" +
+          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+        searchResult.append(tableAuteur);
       }
     }
   }
@@ -271,31 +222,52 @@ function searchByAuthor() {
 function searchBySerie() {
   var queryLoc = document.getElementById("queryLoc").value;
   var idSerieToSave = 0;
-  for (var [idSerie, serie] of series.entries()) {
-    if (serie.nom == queryLoc) {
-      //remplacer le nom de la série ici par le choix de l'utilisateur
+  for (var [idSerie, Serie] of series.entries()) {
+    if (Serie.nom == queryLoc) {
+      //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-      console.log("on est làààààààààà  " + idSerie);
+
       idSerieToSave = parseInt(idSerie);
+
       break;
     }
   }
 
   // on a notre idAuteur, on fait notre petit filtre
   if (idSerieToSave > 0) {
+    searchResult.innerHTML = "";
     for (var [idAlbum, album] of albums.entries()) {
       if (album.idSerie == idSerieToSave) {
         serie = series.get(album.idSerie);
         auteur = auteurs.get(album.idAuteur);
-        console.log(
+        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
+        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+        const tableSerie = document.createElement("div");
+        tableSerie.setAttribute("class", "table-item");
+        tableSerie.innerHTML +=
+          '<div class = "container-image">' +
+          '<img src="' +
+          srcAlbum +
+          nomFic +
+          ".jpg" +
+          '"/>' +
+          "</div>" +
+          '<p class="album">' +
           album.titre +
-            " N°" +
-            album.numero +
-            " Série:" +
-            serie.nom +
-            " Auteur:" +
-            auteur.nom
-        );
+          "</p>" +
+          '<p classe="titre">' +
+          serie.nom +
+          "</p>" +
+          '<p classe="auteur">' +
+          auteur.nom +
+          "</p>" +
+          '<p class="prix">' +
+          album.prix +
+          "€" +
+          "</p>" +
+          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+        searchResult.append(tableSerie);
       }
     }
   }
@@ -309,33 +281,52 @@ function searchByTitle() {
     if (title.titre == queryLoc) {
       //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-      console.log("on est làààààààààà  " + titre);
+
       idTitleToSave = parseInt(titre);
 
       break;
     }
   }
 
-  // on a notre idTitre, on fait notre petit filtre
+  // on a notre idAuteur, on fait notre petit filtre
   if (idTitleToSave > 0) {
+    searchResult.innerHTML = "";
     for (var [idAlbum, album] of albums.entries()) {
       if (idAlbum == idTitleToSave) {
         serie = series.get(album.idSerie);
         auteur = auteurs.get(album.idAuteur);
-        console.log(
+        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
+        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+        const tableTitle = document.createElement("div");
+        tableTitle.setAttribute("class", "table-item");
+        tableTitle.innerHTML +=
+          '<div class = "container-image">' +
+          '<img src="' +
+          srcAlbum +
+          nomFic +
+          ".jpg" +
+          '"/>' +
+          "</div>" +
+          '<p class="album">' +
           album.titre +
-            " N°" +
-            album.numero +
-            " Série:" +
-            serie.nom +
-            " Auteur:" +
-            auteur.nom
-        );
+          "</p>" +
+          '<p classe="titre">' +
+          serie.nom +
+          "</p>" +
+          '<p classe="auteur">' +
+          auteur.nom +
+          "</p>" +
+          '<p class="prix">' +
+          album.prix +
+          "€" +
+          "</p>" +
+          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+        searchResult.append(tableTitle);
       }
     }
   }
 }
-searchResult = document.getElementById("tableau");
 
 Catalogue();
 
@@ -368,8 +359,235 @@ function Catalogue() {
       album.prix +
       "€" +
       "</p>" +
-      ' <input type="button" value="Ajouter au painer" onclick="   " />';
+      ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
 
     searchResult.appendChild(listItem);
   });
 }
+
+//
+//
+//
+//
+//
+//
+// ************************************************
+// Shopping Cart API
+// ************************************************
+
+var shoppingCart = (function () {
+  // =============================
+  // Private methods and propeties
+  // =============================
+  cart = [];
+
+  // Constructor
+  function Item(name, price, count) {
+    this.name = name;
+    this.price = price;
+    this.count = count;
+  }
+
+  // Save cart
+  function saveCart() {
+    sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
+  }
+
+  // Load cart
+  function loadCart() {
+    cart = JSON.parse(sessionStorage.getItem("shoppingCart"));
+  }
+  if (sessionStorage.getItem("shoppingCart") != null) {
+    loadCart();
+  }
+
+  // =============================
+  // Public methods and propeties
+  // =============================
+  var obj = {};
+
+  // Add to cart
+  obj.addItemToCart = function (name, price, count) {
+    for (var item in cart) {
+      if (cart[item].name === name) {
+        cart[item].count++;
+        saveCart();
+        return;
+      }
+    }
+    var item = new Item(name, price, count);
+    cart.push(item);
+    saveCart();
+  };
+  // Set count from item
+  obj.setCountForItem = function (name, count) {
+    for (var i in cart) {
+      if (cart[i].name === name) {
+        cart[i].count = count;
+        break;
+      }
+    }
+  };
+  // Remove item from cart
+  obj.removeItemFromCart = function (name) {
+    for (var item in cart) {
+      if (cart[item].name === name) {
+        cart[item].count--;
+        if (cart[item].count === 0) {
+          cart.splice(item, 1);
+        }
+        break;
+      }
+    }
+    saveCart();
+  };
+
+  // Remove all items from cart
+  obj.removeItemFromCartAll = function (name) {
+    for (var item in cart) {
+      if (cart[item].name === name) {
+        cart.splice(item, 1);
+        break;
+      }
+    }
+    saveCart();
+  };
+
+  // Clear cart
+  obj.clearCart = function () {
+    cart = [];
+    saveCart();
+  };
+
+  // Count cart
+  obj.totalCount = function () {
+    var totalCount = 0;
+    for (var item in cart) {
+      totalCount += cart[item].count;
+    }
+    return totalCount;
+  };
+
+  // Total cart
+  obj.totalCart = function () {
+    var totalCart = 0;
+    for (var item in cart) {
+      totalCart += cart[item].price * cart[item].count;
+    }
+    return Number(totalCart.toFixed(2));
+  };
+
+  // List cart
+  obj.listCart = function () {
+    var cartCopy = [];
+    for (i in cart) {
+      item = cart[i];
+      itemCopy = {};
+      for (p in item) {
+        itemCopy[p] = item[p];
+      }
+      itemCopy.total = Number(item.price * item.count).toFixed(2);
+      cartCopy.push(itemCopy);
+    }
+    return cartCopy;
+  };
+
+  // cart : Array
+  // Item : Object/Class
+  // addItemToCart : Function
+  // removeItemFromCart : Function
+  // removeItemFromCartAll : Function
+  // clearCart : Function
+  // countCart : Function
+  // totalCart : Function
+  // listCart : Function
+  // saveCart : Function
+  // loadCart : Function
+  return obj;
+})();
+
+// *****************************************
+// Triggers / Events
+// *****************************************
+// Add item
+$(".add-to-cart").click(function (event) {
+  event.preventDefault();
+  var name = $(this).data("name");
+  var price = Number($(this).data("price"));
+  shoppingCart.addItemToCart(name, price, 1);
+  displayCart();
+});
+
+// Clear items
+$(".clear-cart").click(function () {
+  shoppingCart.clearCart();
+  displayCart();
+});
+
+function displayCart() {
+  var cartArray = shoppingCart.listCart();
+  var output = "";
+  for (var i in cartArray) {
+    output +=
+      "<tr>" +
+      "<td>" +
+      cartArray[i].name +
+      "</td>" +
+      "<td>(" +
+      cartArray[i].price +
+      ")</td>" +
+      "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
+      cartArray[i].name +
+      ">-</button>" +
+      "<input type='number' class='item-count form-control' data-name='" +
+      cartArray[i].name +
+      "' value='" +
+      cartArray[i].count +
+      "'>" +
+      "<button class='plus-item btn btn-primary input-group-addon' data-name=" +
+      cartArray[i].name +
+      ">+</button></div></td>" +
+      "<td><button class='delete-item btn btn-danger' data-name=" +
+      cartArray[i].name +
+      ">X</button></td>" +
+      " = " +
+      "<td>" +
+      cartArray[i].total +
+      "</td>" +
+      "</tr>";
+  }
+  $(".show-cart").html(output);
+  $(".total-cart").html(shoppingCart.totalCart());
+  $(".total-count").html(shoppingCart.totalCount());
+}
+
+// Delete item button
+
+$(".show-cart").on("click", ".delete-item", function (event) {
+  var name = $(this).data("name");
+  shoppingCart.removeItemFromCartAll(name);
+  displayCart();
+});
+
+// -1
+$(".show-cart").on("click", ".minus-item", function (event) {
+  var name = $(this).data("name");
+  shoppingCart.removeItemFromCart(name);
+  displayCart();
+});
+// +1
+$(".show-cart").on("click", ".plus-item", function (event) {
+  var name = $(this).data("name");
+  shoppingCart.addItemToCart(name);
+  displayCart();
+});
+
+// Item count input
+$(".show-cart").on("change", ".item-count", function (event) {
+  var name = $(this).data("name");
+  var count = Number($(this).val());
+  shoppingCart.setCountForItem(name, count);
+  displayCart();
+});
+
+displayCart();
