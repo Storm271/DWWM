@@ -51,6 +51,12 @@ input:focus:invalid {
 #erreur {
   color: red;
 }
+.meteo {
+
+  float: right;
+  margin-top: 5%;
+  margin-right: 2%;
+}
 
 .table-item, .table {
   display: grid;
@@ -75,4 +81,8 @@ img {
 }
 .show-cart li {
   display: flex;
+}
+td  {
+  padding-left: 10px;
+  padding-bottom: 20px;
 }

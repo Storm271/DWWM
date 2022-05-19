@@ -23,11 +23,11 @@ jQuery(document).ready(function ($) {
   });
 
   /*
-
-prendre exemple sur le code en dessous pour la / les fonctions modifiant la partie du haut
-
-
-*/
+  
+  prendre exemple sur le code en dessous pour la / les fonctions modifiant la partie du haut
+  
+  
+  */
 
   var id = document.getElementById("id");
   id.addEventListener("change", function () {
@@ -129,6 +129,7 @@ Author.addEventListener("change", function () {
   if (this.checked) {
     Serie.checked = false;
     Title.checked = false;
+    queryLoc.value = "";
     type = "Nom";
   } else {
     type = "";
@@ -138,6 +139,7 @@ Serie.addEventListener("change", function () {
   if (this.checked) {
     Title.checked = false;
     Author.checked = false;
+    queryLoc.value = "";
     type = "Nom";
   } else {
     type = "";
@@ -147,6 +149,7 @@ Title.addEventListener("change", function () {
   if (this.checked) {
     Serie.checked = false;
     Author.checked = false;
+    queryLoc.value = "";
     type = "Nom";
   } else {
     type = "";
@@ -155,13 +158,17 @@ Title.addEventListener("change", function () {
 
 function buttonClickGET() {
   if (Author.checked) {
+    queryLoc.innerHTML = " ";
     searchByAuthor();
+    panier();
   }
   if (Serie.checked) {
     searchBySerie();
+    panier();
   }
   if (Title.checked) {
     searchByTitle();
+    panier();
   }
 }
 
@@ -211,7 +218,11 @@ function searchByAuthor() {
           album.prix +
           "€" +
           "</p>" +
-          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+          ' <a href="#" data-name="' +
+          album.titre +
+          '" data-price="' +
+          album.prix +
+          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
 
         searchResult.append(tableAuteur);
       }
@@ -265,7 +276,11 @@ function searchBySerie() {
           album.prix +
           "€" +
           "</p>" +
-          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+          ' <a href="#" data-name="' +
+          album.titre +
+          '" data-price="' +
+          album.prix +
+          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
 
         searchResult.append(tableSerie);
       }
@@ -320,7 +335,11 @@ function searchByTitle() {
           album.prix +
           "€" +
           "</p>" +
-          ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+          ' <a href="#" data-name="' +
+          album.titre +
+          '" data-price="' +
+          album.prix +
+          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
 
         searchResult.append(tableTitle);
       }
@@ -359,7 +378,11 @@ function Catalogue() {
       album.prix +
       "€" +
       "</p>" +
-      ' <a href="#" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+      ' <a href="#" data-name="' +
+      album.titre +
+      '" data-price="' +
+      album.prix +
+      '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
 
     searchResult.appendChild(listItem);
   });
@@ -374,220 +397,251 @@ function Catalogue() {
 // ************************************************
 // Shopping Cart API
 // ************************************************
-
-var shoppingCart = (function () {
-  // =============================
-  // Private methods and propeties
-  // =============================
-  cart = [];
-
-  // Constructor
-  function Item(name, price, count) {
-    this.name = name;
-    this.price = price;
-    this.count = count;
-  }
-
-  // Save cart
-  function saveCart() {
-    sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
-  }
-
-  // Load cart
-  function loadCart() {
-    cart = JSON.parse(sessionStorage.getItem("shoppingCart"));
-  }
-  if (sessionStorage.getItem("shoppingCart") != null) {
-    loadCart();
-  }
-
-  // =============================
-  // Public methods and propeties
-  // =============================
-  var obj = {};
-
-  // Add to cart
-  obj.addItemToCart = function (name, price, count) {
-    for (var item in cart) {
-      if (cart[item].name === name) {
-        cart[item].count++;
-        saveCart();
-        return;
-      }
-    }
-    var item = new Item(name, price, count);
-    cart.push(item);
-    saveCart();
-  };
-  // Set count from item
-  obj.setCountForItem = function (name, count) {
-    for (var i in cart) {
-      if (cart[i].name === name) {
-        cart[i].count = count;
-        break;
-      }
-    }
-  };
-  // Remove item from cart
-  obj.removeItemFromCart = function (name) {
-    for (var item in cart) {
-      if (cart[item].name === name) {
-        cart[item].count--;
-        if (cart[item].count === 0) {
-          cart.splice(item, 1);
-        }
-        break;
-      }
-    }
-    saveCart();
-  };
-
-  // Remove all items from cart
-  obj.removeItemFromCartAll = function (name) {
-    for (var item in cart) {
-      if (cart[item].name === name) {
-        cart.splice(item, 1);
-        break;
-      }
-    }
-    saveCart();
-  };
-
-  // Clear cart
-  obj.clearCart = function () {
+function panier() {
+  var shoppingCart = (function () {
+    // =============================
+    // Private methods and propeties
+    // =============================
     cart = [];
-    saveCart();
-  };
 
-  // Count cart
-  obj.totalCount = function () {
-    var totalCount = 0;
-    for (var item in cart) {
-      totalCount += cart[item].count;
+    // Constructor
+    function Item(name, price, count) {
+      this.name = name;
+      this.price = price;
+      this.count = count;
     }
-    return totalCount;
-  };
 
-  // Total cart
-  obj.totalCart = function () {
-    var totalCart = 0;
-    for (var item in cart) {
-      totalCart += cart[item].price * cart[item].count;
+    // Save cart
+    function saveCart() {
+      sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
     }
-    return Number(totalCart.toFixed(2));
-  };
 
-  // List cart
-  obj.listCart = function () {
-    var cartCopy = [];
-    for (i in cart) {
-      item = cart[i];
-      itemCopy = {};
-      for (p in item) {
-        itemCopy[p] = item[p];
+    // Load cart
+    function loadCart() {
+      cart = JSON.parse(sessionStorage.getItem("shoppingCart"));
+    }
+    if (sessionStorage.getItem("shoppingCart") != null) {
+      loadCart();
+    }
+
+    // =============================
+    // Public methods and propeties
+    // =============================
+    var obj = {};
+
+    // Add to cart
+    obj.addItemToCart = function (name, price, count) {
+      for (var item in cart) {
+        if (cart[item].name === name) {
+          cart[item].count++;
+          saveCart();
+          return;
+        }
       }
-      itemCopy.total = Number(item.price * item.count).toFixed(2);
-      cartCopy.push(itemCopy);
+      var item = new Item(name, price, count);
+      cart.push(item);
+      saveCart();
+    };
+    // Set count from item
+    obj.setCountForItem = function (name, count) {
+      for (var i in cart) {
+        if (cart[i].name === name) {
+          cart[i].count = count;
+          break;
+        }
+      }
+    };
+    // Remove item from cart
+    obj.removeItemFromCart = function (name) {
+      for (var item in cart) {
+        if (cart[item].name === name) {
+          cart[item].count--;
+          if (cart[item].count === 0) {
+            cart.splice(item, 1);
+          }
+          break;
+        }
+      }
+      saveCart();
+    };
+
+    // Remove all items from cart
+    obj.removeItemFromCartAll = function (name) {
+      for (var item in cart) {
+        if (cart[item].name === name) {
+          cart.splice(item, 1);
+          break;
+        }
+      }
+      saveCart();
+    };
+
+    // Clear cart
+    obj.clearCart = function () {
+      cart = [];
+      saveCart();
+    };
+
+    // Count cart
+    obj.totalCount = function () {
+      var totalCount = 0;
+      for (var item in cart) {
+        totalCount += cart[item].count;
+      }
+      return totalCount;
+    };
+
+    // Total cart
+    obj.totalCart = function () {
+      var totalCart = 0;
+      for (var item in cart) {
+        totalCart += cart[item].price * cart[item].count;
+      }
+      return Number(totalCart.toFixed(2));
+    };
+
+    // List cart
+    obj.listCart = function () {
+      var cartCopy = [];
+      for (i in cart) {
+        item = cart[i];
+        itemCopy = {};
+        for (p in item) {
+          itemCopy[p] = item[p];
+        }
+        itemCopy.total = Number(item.price * item.count).toFixed(2);
+        cartCopy.push(itemCopy);
+      }
+      return cartCopy;
+    };
+
+    // cart : Array
+    // Item : Object/Class
+    // addItemToCart : Function
+    // removeItemFromCart : Function
+    // removeItemFromCartAll : Function
+    // clearCart : Function
+    // countCart : Function
+    // totalCart : Function
+    // listCart : Function
+    // saveCart : Function
+    // loadCart : Function
+    return obj;
+  })();
+
+  // *****************************************
+  // Triggers / Events
+  // *****************************************
+  // Add item
+  $(".add-to-cart").click(function (event) {
+    event.preventDefault();
+    var name = $(this).data("name");
+    var price = Number($(this).data("price"));
+    shoppingCart.addItemToCart(name, price, 1);
+    displayCart();
+  });
+
+  // Clear items
+  $(".clear-cart").click(function () {
+    shoppingCart.clearCart();
+    displayCart();
+  });
+
+  function displayCart() {
+    var cartArray = shoppingCart.listCart();
+    var output = "";
+    for (var i in cartArray) {
+      output +=
+        "<tr>" +
+        "<td>" +
+        cartArray[i].name +
+        "</td>" +
+        "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
+        cartArray[i].name +
+        ">-</button>" +
+        "<input type='number' min='0' class='item-count form-control' data-name='" +
+        cartArray[i].name +
+        "' value='" +
+        cartArray[i].count +
+        "'>" +
+        "<button class='plus-item btn btn-primary input-group-addon' data-name=" +
+        cartArray[i].name +
+        ">+</button></div></td>" +
+        "<td><button class='delete-item btn btn-danger' data-name=" +
+        cartArray[i].name +
+        ">X</button></td>" +
+        " = " +
+        "<td>" +
+        cartArray[i].total +
+        " € </td>" +
+        "</tr>";
     }
-    return cartCopy;
-  };
-
-  // cart : Array
-  // Item : Object/Class
-  // addItemToCart : Function
-  // removeItemFromCart : Function
-  // removeItemFromCartAll : Function
-  // clearCart : Function
-  // countCart : Function
-  // totalCart : Function
-  // listCart : Function
-  // saveCart : Function
-  // loadCart : Function
-  return obj;
-})();
-
-// *****************************************
-// Triggers / Events
-// *****************************************
-// Add item
-$(".add-to-cart").click(function (event) {
-  event.preventDefault();
-  var name = $(this).data("name");
-  var price = Number($(this).data("price"));
-  shoppingCart.addItemToCart(name, price, 1);
-  displayCart();
-});
-
-// Clear items
-$(".clear-cart").click(function () {
-  shoppingCart.clearCart();
-  displayCart();
-});
-
-function displayCart() {
-  var cartArray = shoppingCart.listCart();
-  var output = "";
-  for (var i in cartArray) {
-    output +=
-      "<tr>" +
-      "<td>" +
-      cartArray[i].name +
-      "</td>" +
-      "<td>(" +
-      cartArray[i].price +
-      ")</td>" +
-      "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
-      cartArray[i].name +
-      ">-</button>" +
-      "<input type='number' class='item-count form-control' data-name='" +
-      cartArray[i].name +
-      "' value='" +
-      cartArray[i].count +
-      "'>" +
-      "<button class='plus-item btn btn-primary input-group-addon' data-name=" +
-      cartArray[i].name +
-      ">+</button></div></td>" +
-      "<td><button class='delete-item btn btn-danger' data-name=" +
-      cartArray[i].name +
-      ">X</button></td>" +
-      " = " +
-      "<td>" +
-      cartArray[i].total +
-      "</td>" +
-      "</tr>";
+    $(".show-cart").html(output);
+    $(".total-cart").html(shoppingCart.totalCart());
+    $(".total-count").html(shoppingCart.totalCount());
   }
-  $(".show-cart").html(output);
-  $(".total-cart").html(shoppingCart.totalCart());
-  $(".total-count").html(shoppingCart.totalCount());
+
+  // Delete item button
+
+  $(".show-cart").on("click", ".delete-item", function (event) {
+    var name = $(this).data("name");
+    shoppingCart.removeItemFromCartAll(name);
+    displayCart();
+  });
+
+  // -1
+  $(".show-cart").on("click", ".minus-item", function (event) {
+    var name = $(this).data("name");
+    shoppingCart.removeItemFromCart(name);
+    displayCart();
+  });
+  // +1
+  $(".show-cart").on("click", ".plus-item", function (event) {
+    var name = $(this).data("name");
+    shoppingCart.addItemToCart(name);
+    displayCart();
+  });
+
+  // Item count input
+  $(".show-cart").on("change", ".item-count", function (event) {
+    var name = $(this).data("name");
+    var count = Number($(this).val());
+    shoppingCart.setCountForItem(name, count);
+    displayCart();
+  });
+
+  displayCart();
 }
+panier();
 
-// Delete item button
-
-$(".show-cart").on("click", ".delete-item", function (event) {
-  var name = $(this).data("name");
-  shoppingCart.removeItemFromCartAll(name);
-  displayCart();
-});
-
-// -1
-$(".show-cart").on("click", ".minus-item", function (event) {
-  var name = $(this).data("name");
-  shoppingCart.removeItemFromCart(name);
-  displayCart();
-});
-// +1
-$(".show-cart").on("click", ".plus-item", function (event) {
-  var name = $(this).data("name");
-  shoppingCart.addItemToCart(name);
-  displayCart();
-});
-
-// Item count input
-$(".show-cart").on("change", ".item-count", function (event) {
-  var name = $(this).data("name");
-  var count = Number($(this).val());
-  shoppingCart.setCountForItem(name, count);
-  displayCart();
-});
-
-displayCart();
+function getWeather() {
+  var city = document.getElementById("search").value;
+  var units = document.getElementById("units").value;
+  fetch(
+    "http://api.weatherstack.com/current?access_key=9ca1a17f6ca69273ca40d428dfaaa1b9&query=" +
+      city +
+      "&units="
+    // + units+"&language=fr"
+  )
+    .then((a) => a.json())
+    .then((response) => {
+      document.getElementById("image").src = response.current.weather_icons[0];
+      document.getElementById("output").innerHTML =
+        "<h1>" +
+        response.current.weather_descriptions[0] +
+        "</h1> Temperature : " +
+        response.current.temperature +
+        " °C" +
+        "<br>Ressenti : " +
+        response.current.feelslike +
+        " °C" +
+        "<br> UV : " +
+        response.current.uv_index +
+        "<br> Humidité : " +
+        response.current.humidity +
+        " %" +
+        "<br>Couverture nuageuse : " +
+        response.current.cloudcover +
+        " %";
+    });
+}
