@@ -4,123 +4,6 @@ const albumDefault = srcImg + "noComics.jpeg";
 const srcAlbumMini = "albumsMini/"; // emplacement des images des albums en petit
 const srcAlbum = "albums/"; // emplacement des images des albums en grand
 searchResult = document.getElementById("tableau");
-jQuery(document).ready(function ($) {
-  // Affichage des BD
-  var txtSerie = document.getElementById("serie");
-  var txtNumero = document.getElementById("numero");
-  var txtTitre = document.getElementById("titre");
-  var txtAuteur = document.getElementById("auteur");
-  var txtPrix = document.getElementById("prix");
-  var imgAlbum = document.getElementById("album");
-  var imgAlbumMini = document.getElementById("albumMini");
-
-  imgAlbum.addEventListener("error", function () {
-    prbImg(this);
-  });
-
-  imgAlbumMini.addEventListener("error", function () {
-    prbImg(this);
-  });
-
-  /*
-  
-  prendre exemple sur le code en dessous pour la / les fonctions modifiant la partie du haut
-  
-  
-  */
-
-  var id = document.getElementById("id");
-  id.addEventListener("change", function () {
-    getAlbum(this);
-  });
-
-  /**
-   * Récupération de l'album par son id et appel de
-   * la fonction d'affichage
-   *
-   * @param {number} num
-   */
-  function getAlbum(num) {
-    var album = albums.get(num.value);
-
-    if (album === undefined) {
-      txtSerie.value = "";
-      txtNumero.value = "";
-      txtTitre.value = "";
-      txtAuteur.value = "";
-      txtPrix.value = 0;
-
-      afficheAlbums(
-        $("#albumMini"),
-        $("#album"),
-        albumDefaultMini,
-        albumDefault
-      );
-    } else {
-      var serie = series.get(album.idSerie);
-      var auteur = auteurs.get(album.idAuteur);
-
-      txtSerie.value = serie.nom;
-      txtNumero.value = album.numero;
-      txtTitre.value = album.titre;
-      txtAuteur.value = auteur.nom;
-      txtPrix.value = album.prix;
-
-      var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
-
-      // Utilisation d'une expression régulière pour supprimer
-      // les caractères non autorisés dans les noms de fichiers : '!?.":$
-      nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
-
-      afficheAlbums(
-        $("#albumMini"),
-        $("#album"),
-        srcAlbumMini + nomFic + ".jpg",
-        srcAlbum + nomFic + ".jpg"
-      );
-    }
-  }
-
-  /**
-   * Affichage des images, les effets sont chainés et traités
-   * en file d'attente par jQuery d'où les "stop()) et "clearQueue()"
-   * pour éviter l'accumulation d'effets si défilement rapide des albums.
-   *
-   * @param {object jQuery} $albumMini
-   * @param {object jQuery} $album
-   * @param {string} nomFic
-   * @param {string} nomFicBig
-   */
-  function afficheAlbums($albumMini, $album, nomFicMini, nomFic) {
-    $album
-      .stop(true, true)
-      .clearQueue()
-      .fadeOut(100, function () {
-        $album.attr("src", nomFic);
-        $albumMini
-          .stop(true, true)
-          .clearQueue()
-          .fadeOut(150, function () {
-            $albumMini.attr("src", nomFicMini);
-            $albumMini.slideDown(200, function () {
-              $album.slideDown(200);
-            });
-          });
-      });
-  }
-
-  /**
-   * Affichage de l'image par défaut si le chargement de l'image de l'album
-   * ne s'est pas bien passé
-   *
-   * @param {object HTML} element
-   */
-  function prbImg(element) {
-    // console.log(element);
-    if (element.id === "albumMini") element.src = albumDefaultMini;
-    else element.src = albumDefault;
-  }
-});
 let Author = document.getElementById("Author");
 let Serie = document.getElementById("Serie");
 let Title = document.getElementById("Title");
@@ -158,7 +41,6 @@ Title.addEventListener("change", function () {
 
 function buttonClickGET() {
   if (Author.checked) {
-    queryLoc.innerHTML = " ";
     searchByAuthor();
     panier();
   }
@@ -172,176 +54,203 @@ function buttonClickGET() {
   }
 }
 
+function buttonClickGETCatalogue() {
+  searchResult.innerHTML = "";
+  queryLoc.value = "";
+  Catalogue();
+  Serie.checked = false;
+  Author.checked = false;
+  Title.checked = false;
+}
+
 function searchByAuthor() {
-  var queryLoc = document.getElementById("queryLoc").value;
+  searchResult.innerHTML = "";
+  var queryLoc = document.getElementById("queryLoc").value.toLocaleLowerCase();
   var idAuteurToSave = 0;
+  var tabIdAuteur = new Array();
   for (var [idAuteur, auteur] of auteurs.entries()) {
-    if (auteur.nom == queryLoc) {
+    if (auteur.nom.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
+      console.log(idAuteur);
       //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
 
       idAuteurToSave = parseInt(idAuteur);
-
-      break;
+      tabIdAuteur.push(idAuteurToSave);
+      // break;
     }
   }
 
-  // on a notre idAuteur, on fait notre petit filtre
-  if (idAuteurToSave > 0) {
-    searchResult.innerHTML = "";
-    for (var [idAlbum, album] of albums.entries()) {
-      if (album.idAuteur == idAuteurToSave) {
-        serie = series.get(album.idSerie);
-        auteur = auteurs.get(album.idAuteur);
-        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
-        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
-        const tableAuteur = document.createElement("div");
-        tableAuteur.setAttribute("class", "table-item");
-        tableAuteur.innerHTML +=
-          '<div class = "container-image">' +
-          '<img src="' +
-          srcAlbum +
-          nomFic +
-          ".jpg" +
-          '"/>' +
-          "</div>" +
-          '<p class="album">' +
-          album.titre +
-          "</p>" +
-          '<p classe="titre">' +
-          serie.nom +
-          "</p>" +
-          '<p classe="auteur">' +
-          auteur.nom +
-          "</p>" +
-          '<p class="prix">' +
-          album.prix +
-          "€" +
-          "</p>" +
-          ' <a href="#" data-name="' +
-          album.titre +
-          '" data-price="' +
-          album.prix +
-          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+  console.log(tabIdAuteur);
 
-        searchResult.append(tableAuteur);
+  // on a notre idAuteur, on fait notre petit filtre
+
+  for (i = 0; i < tabIdAuteur.length; i++) {
+    idAuteurToSave = tabIdAuteur[i];
+
+    if (idAuteurToSave > 0) {
+      for (var [idAlbum, album] of albums.entries()) {
+        if (album.idAuteur == idAuteurToSave) {
+          serie = series.get(album.idSerie);
+          auteur = auteurs.get(album.idAuteur);
+          var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
+          nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+          const tableAuteur = document.createElement("div");
+          tableAuteur.setAttribute("class", "table-item");
+          tableAuteur.innerHTML +=
+            '<div class = "container-image">' +
+            '<img src="' +
+            srcAlbum +
+            nomFic +
+            ".jpg" +
+            '"/>' +
+            "</div>" +
+            '<p class="album">' +
+            album.titre +
+            "</p>" +
+            '<p classe="titre">' +
+            serie.nom +
+            "</p>" +
+            '<p classe="auteur">' +
+            auteur.nom +
+            "</p>" +
+            '<p class="prix">' +
+            album.prix +
+            "€" +
+            "</p>" +
+            ' <a href="#" data-name="' +
+            album.titre.split(" ").join("_") +
+            '" data-price="' +
+            album.prix +
+            '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+          searchResult.append(tableAuteur);
+        }
       }
     }
   }
 }
 
 function searchBySerie() {
-  var queryLoc = document.getElementById("queryLoc").value;
+  searchResult.innerHTML = "";
+  var queryLoc = document.getElementById("queryLoc").value.toLocaleLowerCase();
+  console.log(queryLoc);
   var idSerieToSave = 0;
+  var tabIdSerie = new Array();
   for (var [idSerie, Serie] of series.entries()) {
-    if (Serie.nom == queryLoc) {
+    if (Serie.nom.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
       //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
 
       idSerieToSave = parseInt(idSerie);
-
-      break;
+      tabIdSerie.push(idSerieToSave);
     }
   }
 
   // on a notre idAuteur, on fait notre petit filtre
-  if (idSerieToSave > 0) {
-    searchResult.innerHTML = "";
-    for (var [idAlbum, album] of albums.entries()) {
-      if (album.idSerie == idSerieToSave) {
-        serie = series.get(album.idSerie);
-        auteur = auteurs.get(album.idAuteur);
-        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
-        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
-        const tableSerie = document.createElement("div");
-        tableSerie.setAttribute("class", "table-item");
-        tableSerie.innerHTML +=
-          '<div class = "container-image">' +
-          '<img src="' +
-          srcAlbum +
-          nomFic +
-          ".jpg" +
-          '"/>' +
-          "</div>" +
-          '<p class="album">' +
-          album.titre +
-          "</p>" +
-          '<p classe="titre">' +
-          serie.nom +
-          "</p>" +
-          '<p classe="auteur">' +
-          auteur.nom +
-          "</p>" +
-          '<p class="prix">' +
-          album.prix +
-          "€" +
-          "</p>" +
-          ' <a href="#" data-name="' +
-          album.titre +
-          '" data-price="' +
-          album.prix +
-          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+  for (i = 0; i < tabIdSerie.length; i++) {
+    idSerieToSave = tabIdSerie[i];
+    if (idSerieToSave > 0) {
+      for (var [idAlbum, album] of albums.entries()) {
+        if (album.idSerie == idSerieToSave) {
+          serie = series.get(album.idSerie);
+          auteur = auteurs.get(album.idAuteur);
+          var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
 
-        searchResult.append(tableSerie);
+          nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+          const tableSerie = document.createElement("div");
+          tableSerie.setAttribute("class", "table-item");
+          tableSerie.innerHTML +=
+            '<div class = "container-image">' +
+            '<img src="' +
+            srcAlbum +
+            nomFic +
+            ".jpg" +
+            '"/>' +
+            "</div>" +
+            '<p class="album">' +
+            album.titre +
+            "</p>" +
+            '<p classe="titre">' +
+            serie.nom +
+            "</p>" +
+            '<p classe="auteur">' +
+            auteur.nom +
+            "</p>" +
+            '<p class="prix">' +
+            album.prix +
+            "€" +
+            "</p>" +
+            ' <a href="#" data-name="' +
+            album.titre.split(" ").join("_") +
+            '" data-price="' +
+            album.prix +
+            '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+          searchResult.append(tableSerie);
+        }
       }
     }
   }
 }
 
 function searchByTitle() {
-  var queryLoc = document.getElementById("queryLoc").value;
+  searchResult.innerHTML = "";
+  var queryLoc = document.getElementById("queryLoc").value.toLocaleLowerCase();
   var idTitleToSave = 0;
+  var tabIdTitle = new Array();
 
   for (var [titre, title] of albums.entries()) {
-    if (title.titre == queryLoc) {
+    if (title.titre.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
       //remplacer le nom de l'auteur ici par le choix de l'utilisateur
       //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
 
       idTitleToSave = parseInt(titre);
-
-      break;
+      tabIdTitle.push(idTitleToSave);
     }
   }
 
   // on a notre idAuteur, on fait notre petit filtre
-  if (idTitleToSave > 0) {
-    searchResult.innerHTML = "";
-    for (var [idAlbum, album] of albums.entries()) {
-      if (idAlbum == idTitleToSave) {
-        serie = series.get(album.idSerie);
-        auteur = auteurs.get(album.idAuteur);
-        var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
-        nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
-        const tableTitle = document.createElement("div");
-        tableTitle.setAttribute("class", "table-item");
-        tableTitle.innerHTML +=
-          '<div class = "container-image">' +
-          '<img src="' +
-          srcAlbum +
-          nomFic +
-          ".jpg" +
-          '"/>' +
-          "</div>" +
-          '<p class="album">' +
-          album.titre +
-          "</p>" +
-          '<p classe="titre">' +
-          serie.nom +
-          "</p>" +
-          '<p classe="auteur">' +
-          auteur.nom +
-          "</p>" +
-          '<p class="prix">' +
-          album.prix +
-          "€" +
-          "</p>" +
-          ' <a href="#" data-name="' +
-          album.titre +
-          '" data-price="' +
-          album.prix +
-          '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+  for (i = 0; i < tabIdTitle.length; i++) {
+    idTitleToSave = tabIdTitle[i];
 
-        searchResult.append(tableTitle);
+    if (idTitleToSave > 0) {
+      for (var [idAlbum, album] of albums.entries()) {
+        if (idAlbum == idTitleToSave) {
+          serie = series.get(album.idSerie);
+          auteur = auteurs.get(album.idAuteur);
+          var nomFic = serie.nom + "-" + album.numero + "-" + album.titre;
+          nomFic = nomFic.replace(/'|!|\?|\.|"|:|\$/g, "");
+          const tableTitle = document.createElement("div");
+          tableTitle.setAttribute("class", "table-item");
+          tableTitle.innerHTML +=
+            '<div class = "container-image">' +
+            '<img src="' +
+            srcAlbum +
+            nomFic +
+            ".jpg" +
+            '"/>' +
+            "</div>" +
+            '<p class="album">' +
+            album.titre +
+            "</p>" +
+            '<p classe="titre">' +
+            serie.nom +
+            "</p>" +
+            '<p classe="auteur">' +
+            auteur.nom +
+            "</p>" +
+            '<p class="prix">' +
+            album.prix +
+            "€" +
+            "</p>" +
+            ' <a href="#" data-name="' +
+            album.titre.split(" ").join("_") +
+            '" data-price="' +
+            album.prix +
+            '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
+
+          searchResult.append(tableTitle);
+        }
       }
     }
   }
@@ -379,7 +288,7 @@ function Catalogue() {
       "€" +
       "</p>" +
       ' <a href="#" data-name="' +
-      album.titre +
+      album.titre.split(" ").join("_") +
       '" data-price="' +
       album.prix +
       '" class="add-to-cart btn btn-primary">Ajouter au panier</a>';
@@ -554,7 +463,7 @@ function panier() {
       output +=
         "<tr>" +
         "<td>" +
-        cartArray[i].name +
+        cartArray[i].name.split("_").join(" ") +
         "</td>" +
         "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" +
         cartArray[i].name +
@@ -614,29 +523,28 @@ function panier() {
 }
 panier();
 
+//
+//
+// ---------------------------------API Meteo---------------------------------------------------------------------------------------------------------
+//
+//
+
 function getWeather() {
   var city = document.getElementById("search").value;
-  var units = document.getElementById("units").value;
+
   fetch(
     "http://api.weatherstack.com/current?access_key=9ca1a17f6ca69273ca40d428dfaaa1b9&query=" +
-      city +
-      "&units="
-    // + units+"&language=fr"
+      city
   )
     .then((a) => a.json())
     .then((response) => {
       document.getElementById("image").src = response.current.weather_icons[0];
       document.getElementById("output").innerHTML =
-        "<h1>" +
+        "<br>" +
         response.current.weather_descriptions[0] +
-        "</h1> Temperature : " +
+        "<br> Temperature : " +
         response.current.temperature +
         " °C" +
-        "<br>Ressenti : " +
-        response.current.feelslike +
-        " °C" +
-        "<br> UV : " +
-        response.current.uv_index +
         "<br> Humidité : " +
         response.current.humidity +
         " %" +

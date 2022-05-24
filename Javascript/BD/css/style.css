@@ -2,42 +2,15 @@ body {
   font: 1em sans-serif;
   padding: 0;
   margin: 0;
+  background: url(https://storage.googleapis.com/yk-cdn/photos/pdp/thibaud-poirier/trinity-college-library.jpg);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-form {
-  max-width: 300px;
-  margin: 0;
-  padding: 0 5px;
-}
 
-p>label {
-  display: block;
-}
-
-legend {
-  background-color: #000;
-  color: #fff;
-  padding: 3px 6px;
-}
-
-input[type=text],
-input[type=email],
-input[type=number],
-textarea,
-fieldset {
-  /* requis pour composer de manière appropriée les éléments
-     de formulaire sur les navigateurs fondés sur WebKit */
-  -webkit-appearance: none;
-
-  width: 100%;
-  border: 1px solid #333;
-  margin: 0;
-
-  font-family: inherit;
-  font-size: 90%;
-
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+.container {
+  padding: unset;
+  background-color: #FEFBE7;
 }
 
 input:invalid {
@@ -51,38 +24,127 @@ input:focus:invalid {
 #erreur {
   color: red;
 }
-.meteo {
 
+.meteo {
+ 
   float: right;
   margin-top: 5%;
   margin-right: 2%;
+  font-size: small;
+  margin-bottom: 200px;
+
+}
+.top{
+  background-color: #F9EBC8;
 }
 
-.table-item, .table {
+
+
+#checkboxes {
+  margin-top: 20%;
+}
+
+.table-item,
+.table {
   display: grid;
-  grid-template-columns: repeat(6, 150px [col-start]);
+  grid-template-columns: repeat(6, 1fr [col-start]);
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
   align-items: center;
   border: 3px solid #000000;
+  background-color: #DAE5D0;
 
 }
-.tableau{
-  grid-template-rows:max-content ;
+.table-item:nth-child(odd) {
+  background-color:#A0BCC2 ;
 }
-.btn-achat{
+
+.btn-achat {
   width: 100px;
   height: 100px;
 }
+
 img {
   max-width: 100%;
-  max-height:100% ;
+  max-height: 100%;
 }
+
 .show-cart li {
   display: flex;
 }
-td  {
+
+td {
   padding-left: 10px;
   padding-bottom: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .meteo {
+    margin-top: 20%;
+  }
+
+  #image {
+    height: 100px;
+    width: 100px;
+  }
+
+  #output {
+    font-size: small;
+  }
+
+  #output>h1 {
+    font-size: large;
+  }
+
+  #searchbar {
+    margin-top: 70%;
+
+  }
+
+  .table-item {
+    grid-template-columns: unset;
+    font-size: x-large;
+    margin-bottom: 10%;
+
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .table {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .table-item {
+    margin-right: 10%;
+    margin-left: 10%;
+  }
+
+  body {
+    margin-right: 10%;
+    margin-left: 10%;
+  }
+}
+
+
+
+@media screen and (max-width: 346px) {
+  .container {
+    padding: unset;
+    margin: unset;
+
+
+  }
+}
+
+@media screen and (max-width: 575px) and (max-height :915px) {
+
+  .meteo {
+    margin-bottom: 10px;
+  }
+
 }
