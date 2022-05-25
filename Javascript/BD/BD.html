@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <!-- Nav -->
     <nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
         <div class="row">
@@ -24,45 +23,53 @@
         </div>
     </nav>
 
-
-   
-
     <div class="container">
-     
-<div class="top"> 
-        <div class="meteo">
-            <input placeholder="City/ZIP" id="search">
-                
-               
-            </select><button onclick="getWeather()">Météo</button>
-            <img id="image" />
-            <div id="output"></div>
-        </div>
-  <br>
-  <br>
+        <div class="top">
+            <div class="titre">
+                <div class="word">
 
-        <div id="searchbar">
-            <div id="checkboxes">
-            <label for="Author">Auteur</label>
-            <input type="checkbox" id="Author" />
-            <label for="Serie">Serie</label>
-            <input type="checkbox" id="Serie" />
-            <label for="Title">Titre</label>
-            <input type="checkbox" id="Title" />
+                    <span>T</span>
+                    <span>H</span>
+                    <span>E &nbsp</span>
+                    <span>B</span>
+                    <span>O</span>
+                    <span>O</span>
+                    <span>K &nbsp</span>
+                    <span>W</span>
+                    <span>O</span>
+                    <span>R</span>
+                    <span>M</span>
+                </div>
             </div>
+            <!-- API Meteo -->
+            <div class="meteo">
+                <input placeholder="City/ZIP" id="search" onchange="getWeather()">
+                <button onclick="getWeather()">Météo</button>
+                <img id="image" />
+                <div id="output"></div>
+            </div>
+            <!-- Zone de recherche -->
+            <div id="searchbar">
+                <div id="checkboxes">
+                    <label for="Author">Auteur</label>
+                    <input type="checkbox" id="Author" />
+                    <label for="Serie">Serie</label>
+                    <input type="checkbox" id="Serie" />
+                    <label for="Title">Titre</label>
+                    <input type="checkbox" id="Title" />
+                </div>
 
-            <input type="text"  id="queryLoc" value="" onchange="buttonClickGET()" />
-            <input type="button" value="Recherche" onclick="buttonClickGET()" />
-            <input type="button" value="Retour au catalogue" onclick="buttonClickGETCatalogue()" />
-        
-</div>
+                <input type="text" id="queryLoc" value="" onchange="buttonClickGET()" />
+                <input type="button" value="Recherche" onclick="buttonClickGET()" />
+                <input type="button" value="Retour au catalogue" onclick="buttonClickGETCatalogue()" />
 
-        <br>
-        <br>
-        <br>
-        <h1>Liste des BD</h1>
+            </div>
+            <br>
+            <br>
         </div>
-        
+
+        <h1>Liste des BD</h1>
+
         <div class="table">
 
             <h3 class="table-title">Album</h3>
@@ -72,7 +79,7 @@
             <h3 class="table-title">Prix</h3>
             <h3 class="table-title">Achat</h3>
         </div>
-
+        <!-- Zone BD -->
         <div id="tableau"></div>
 
     </div>
@@ -90,7 +97,6 @@
                 </div>
                 <div class="modal-body">
                     <table class="show-cart ">
-
                     </table>
                     <div>Prix Total: <span class="total-cart"></span> €</div>
                 </div>
@@ -102,12 +108,11 @@
         </div>
     </div>
 
+    <footer>
+        <ul>Copyright BERENGUER Pierre | Tous droits réservés
+        </ul>
+    </footer>
 
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

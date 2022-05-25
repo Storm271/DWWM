@@ -8,6 +8,8 @@ let Author = document.getElementById("Author");
 let Serie = document.getElementById("Serie");
 let Title = document.getElementById("Title");
 
+//#region CONFIGURATION CHECKBOXES
+
 Author.addEventListener("change", function () {
   if (this.checked) {
     Serie.checked = false;
@@ -39,17 +41,24 @@ Title.addEventListener("change", function () {
   }
 });
 
+//#endregion
+
+//#region FONCTIONS RECHERCHE
+
 function buttonClickGET() {
   if (Author.checked) {
     searchByAuthor();
+    observer();
     panier();
   }
   if (Serie.checked) {
     searchBySerie();
+    observer();
     panier();
   }
   if (Title.checked) {
     searchByTitle();
+    observer();
     panier();
   }
 }
@@ -58,6 +67,7 @@ function buttonClickGETCatalogue() {
   searchResult.innerHTML = "";
   queryLoc.value = "";
   Catalogue();
+  observer();
   Serie.checked = false;
   Author.checked = false;
   Title.checked = false;
@@ -71,18 +81,12 @@ function searchByAuthor() {
   for (var [idAuteur, auteur] of auteurs.entries()) {
     if (auteur.nom.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
       console.log(idAuteur);
-      //remplacer le nom de l'auteur ici par le choix de l'utilisateur
-      //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-
       idAuteurToSave = parseInt(idAuteur);
       tabIdAuteur.push(idAuteurToSave);
-      // break;
     }
   }
 
   console.log(tabIdAuteur);
-
-  // on a notre idAuteur, on fait notre petit filtre
 
   for (i = 0; i < tabIdAuteur.length; i++) {
     idAuteurToSave = tabIdAuteur[i];
@@ -138,15 +142,11 @@ function searchBySerie() {
   var tabIdSerie = new Array();
   for (var [idSerie, Serie] of series.entries()) {
     if (Serie.nom.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
-      //remplacer le nom de l'auteur ici par le choix de l'utilisateur
-      //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-
       idSerieToSave = parseInt(idSerie);
       tabIdSerie.push(idSerieToSave);
     }
   }
 
-  // on a notre idAuteur, on fait notre petit filtre
   for (i = 0; i < tabIdSerie.length; i++) {
     idSerieToSave = tabIdSerie[i];
     if (idSerieToSave > 0) {
@@ -201,15 +201,11 @@ function searchByTitle() {
 
   for (var [titre, title] of albums.entries()) {
     if (title.titre.toLocaleLowerCase().indexOf(queryLoc) >= 0) {
-      //remplacer le nom de l'auteur ici par le choix de l'utilisateur
-      //on est sur le bon: on sauvegarde l'id, puis on sort de la boucle
-
       idTitleToSave = parseInt(titre);
       tabIdTitle.push(idTitleToSave);
     }
   }
 
-  // on a notre idAuteur, on fait notre petit filtre
   for (i = 0; i < tabIdTitle.length; i++) {
     idTitleToSave = tabIdTitle[i];
 
@@ -256,6 +252,10 @@ function searchByTitle() {
   }
 }
 
+//#endregion
+
+//#region AFFICHAGE DE TOUTES LES BD
+
 Catalogue();
 
 function Catalogue() {
@@ -296,21 +296,12 @@ function Catalogue() {
     searchResult.appendChild(listItem);
   });
 }
+//#endregion
 
-//
-//
-//
-//
-//
-//
-// ************************************************
-// Shopping Cart API
-// ************************************************
+//#region PANIER
+
 function panier() {
   var shoppingCart = (function () {
-    // =============================
-    // Private methods and propeties
-    // =============================
     cart = [];
 
     // Constructor
@@ -333,9 +324,6 @@ function panier() {
       loadCart();
     }
 
-    // =============================
-    // Public methods and propeties
-    // =============================
     var obj = {};
 
     // Add to cart
@@ -424,23 +412,9 @@ function panier() {
       return cartCopy;
     };
 
-    // cart : Array
-    // Item : Object/Class
-    // addItemToCart : Function
-    // removeItemFromCart : Function
-    // removeItemFromCartAll : Function
-    // clearCart : Function
-    // countCart : Function
-    // totalCart : Function
-    // listCart : Function
-    // saveCart : Function
-    // loadCart : Function
     return obj;
   })();
 
-  // *****************************************
-  // Triggers / Events
-  // *****************************************
   // Add item
   $(".add-to-cart").click(function (event) {
     event.preventDefault();
@@ -522,12 +496,9 @@ function panier() {
   displayCart();
 }
 panier();
+//#endregion
 
-//
-//
-// ---------------------------------API Meteo---------------------------------------------------------------------------------------------------------
-//
-//
+//#region  API METEO
 
 function getWeather() {
   var city = document.getElementById("search").value;
@@ -540,9 +511,9 @@ function getWeather() {
     .then((response) => {
       document.getElementById("image").src = response.current.weather_icons[0];
       document.getElementById("output").innerHTML =
-        "<br>" +
+        "<br><h2>" +
         response.current.weather_descriptions[0] +
-        "<br> Temperature : " +
+        "</h2> Temperature : " +
         response.current.temperature +
         " °C" +
         "<br> Humidité : " +
@@ -553,3 +524,43 @@ function getWeather() {
         " %";
     });
 }
+//#endregion
+
+//#region ANIMATIONS
+
+// ANIMATION TITRE
+const spans = document.querySelectorAll(".word span");
+
+spans.forEach((span, idx) => {
+  setTimeout(() => {
+    span.classList.add("active");
+  }, 200 * (idx + 1));
+  span.classList.remove("active");
+});
+
+// ANIMATION APPARITION AU SCROLL
+function observer() {
+  const ratio = 0;
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: ratio,
+  };
+
+  const handleIntersect = function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (entry.intersectionRatio > ratio) {
+        entry.target.classList.add("reveal-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(handleIntersect, options);
+  document.querySelectorAll(".table-item").forEach(function (r) {
+    observer.observe(r);
+  });
+}
+observer();
+
+//#endregion
